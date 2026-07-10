@@ -357,3 +357,22 @@ function doStaffLogin() {
     if (btn) { btn.textContent = 'Sign In'; btn.disabled = false; }
   }, 1200);
 }
+
+// ── Claims Tracker Tab Switching ──────────────────────────────────────────
+function switchClaimsTrackerTab(tabId) {
+  const tabs = ['active', 'history', 'settlements'];
+  tabs.forEach(t => {
+    const content = document.getElementById('claims-content-' + t);
+    const btn = document.getElementById('claims-tab-btn-' + t);
+    if (content) {
+      content.style.display = (t === tabId) ? 'block' : 'none';
+    }
+    if (btn) {
+      if (t === tabId) {
+        btn.classList.add('antd-btn-primary');
+      } else {
+        btn.classList.remove('antd-btn-primary');
+      }
+    }
+  });
+}
