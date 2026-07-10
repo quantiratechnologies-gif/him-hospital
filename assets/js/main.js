@@ -14,7 +14,6 @@ const SCREEN_META = {
   'document-upload': { title: 'Document Upload', sub: 'AI auto-categorization for bills and reports' },
   'active-claims': { title: 'Claims Tracker', sub: 'Track cashless pre-auths, final settlements, and payment ledgers' },
   'rejections': { title: 'Rejections & Queries', sub: '3 urgent actions require your reply' },
-  'notifications': { title: 'Notifications', sub: 'Insurance updates, TPA queries, and AI alerts' },
   'settings': { title: 'Settings', sub: 'Hospital profile, bank details, and staff access' },
 };
 
