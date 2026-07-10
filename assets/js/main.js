@@ -12,11 +12,8 @@ const SCREEN_META = {
   'admission': { title: 'Admissions', sub: 'Insurance patients currently admitted' },
   'pre-auth': { title: 'Pre-Authorization', sub: 'AI-assisted pre-auth submission wizard' },
   'document-upload': { title: 'Document Upload', sub: 'AI auto-categorization for bills and reports' },
-  'ai-optimizer': { title: 'AI Description Optimizer', sub: 'Improve clinical descriptions to match ICD-10 codes' },
-  'active-claims': { title: 'Active Claims', sub: 'Real-time status of all submitted claims' },
-  'claim-history': { title: 'Claim History', sub: 'All past claims submitted from this hospital' },
+  'active-claims': { title: 'Claims Tracker', sub: 'Track cashless pre-auths, final settlements, and payment ledgers' },
   'rejections': { title: 'Rejections & Queries', sub: '3 urgent actions require your reply' },
-  'settlements': { title: 'Settlement Ledger', sub: 'Track payments received from insurers' },
   'notifications': { title: 'Notifications', sub: 'Insurance updates, TPA queries, and AI alerts' },
   'settings': { title: 'Settings', sub: 'Hospital profile, bank details, and staff access' },
 };
