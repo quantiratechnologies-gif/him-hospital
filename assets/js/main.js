@@ -267,11 +267,17 @@ function togglePreAuthForm(show) {
 }
 
 function switchSubmissionMode(mode) {
-  const isClaim = mode === 'claim';
   const radioPreauth = document.getElementById('sub-type-preauth');
-  const radioClaim = document.getElementById('sub-type-claim');
-  if (radioPreauth && !isClaim) radioPreauth.checked = true;
-  if (radioClaim && isClaim) radioClaim.checked = true;
+  const radioCashlessClaim = document.getElementById('sub-type-cashless-claim');
+  const radioReimbursement = document.getElementById('sub-type-reimbursement');
+
+  if (mode === 'preauth' && radioPreauth) radioPreauth.checked = true;
+  else if (mode === 'cashless-claim' && radioCashlessClaim) radioCashlessClaim.checked = true;
+  else if (mode === 'reimbursement' && radioReimbursement) radioReimbursement.checked = true;
+
+  const currentMode = (radioReimbursement && radioReimbursement.checked) ? 'reimbursement'
+                    : (radioCashlessClaim && radioCashlessClaim.checked) ? 'cashless-claim'
+                    : 'preauth';
 
   const titleEl = document.getElementById('submission-wizard-title');
   const procLabel = document.getElementById('label-form-procedure');
@@ -279,18 +285,24 @@ function switchSubmissionMode(mode) {
   const extraFields = document.getElementById('claim-extra-fields');
   const submitBtn = document.getElementById('wizard-submit-btn');
 
-  if (isClaim) {
-    if (titleEl) titleEl.innerHTML = '<i data-lucide="file-plus" class="icon-sm"></i> Submit New Final Claim / Settlement';
+  if (currentMode === 'reimbursement') {
+    if (titleEl) titleEl.innerHTML = '<i data-lucide="wallet" class="icon-sm"></i> Submit With-Cash / Reimbursement Claim';
     if (procLabel) procLabel.textContent = 'Procedure / Treatment Summary';
-    if (amtLabel) amtLabel.textContent = 'Final Claim Amount (₹)';
+    if (amtLabel) amtLabel.textContent = 'Total Out-of-Pocket Paid Bill (₹)';
     if (extraFields) extraFields.style.display = 'block';
-    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="check-circle" class="icon-sm"></i> Submit Final Claim for Settlement';
+    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="check-circle" class="icon-sm"></i> Submit Reimbursement Package to Insurer';
+  } else if (currentMode === 'cashless-claim') {
+    if (titleEl) titleEl.innerHTML = '<i data-lucide="check-circle" class="icon-sm"></i> Submit Cashless Final Discharge Claim';
+    if (procLabel) procLabel.textContent = 'Procedure / Treatment Summary';
+    if (amtLabel) amtLabel.textContent = 'Final Hospital Claim Amount (₹)';
+    if (extraFields) extraFields.style.display = 'block';
+    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="check-circle" class="icon-sm"></i> Submit Cashless Final Claim for Settlement';
   } else {
     if (titleEl) titleEl.innerHTML = '<i data-lucide="shield-check" class="icon-sm"></i> Submit Cashless Pre-Authorization';
     if (procLabel) procLabel.textContent = 'Proposed Procedure';
     if (amtLabel) amtLabel.textContent = 'Estimated Bill Amount (₹)';
     if (extraFields) extraFields.style.display = 'none';
-    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="send" class="icon-sm"></i> Submit Pre-Authorization to TPA';
+    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="send" class="icon-sm"></i> Submit Cashless Pre-Authorization to TPA';
   }
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
@@ -309,7 +321,12 @@ function toggleIcuStatus(checked) {
 }
 
 function submitSubmissionWizard() {
-  const isClaim = document.getElementById('sub-type-claim') && document.getElementById('sub-type-claim').checked;
+  const radioCashlessClaim = document.getElementById('sub-type-cashless-claim');
+  const radioReimbursement = document.getElementById('sub-type-reimbursement');
+  const currentMode = (radioReimbursement && radioReimbursement.checked) ? 'reimbursement'
+                    : (radioCashlessClaim && radioCashlessClaim.checked) ? 'cashless-claim'
+                    : 'preauth';
+
   const name = document.getElementById('pre-auth-form-name').value.trim();
   const id = document.getElementById('pre-auth-form-id').value.trim();
   const insurer = document.getElementById('pre-auth-form-insurer').value;
@@ -326,10 +343,13 @@ function submitSubmissionWizard() {
 
   const formattedAmount = '₹' + parseInt(amount).toLocaleString('en-IN');
 
-  if (isClaim) {
+  if (currentMode === 'reimbursement' || currentMode === 'cashless-claim') {
     const claimId = 'CLM-2026-' + Math.floor(1000 + Math.random() * 9000);
     const invoiceNo = (document.getElementById('claim-form-invoice') && document.getElementById('claim-form-invoice').value.trim()) || 'INV-2026-NEW';
-    
+    const tagBg = currentMode === 'reimbursement' ? '#fef9c3' : '#dcfce7';
+    const tagColor = currentMode === 'reimbursement' ? '#854d0e' : '#15803d';
+    const tagText = currentMode === 'reimbursement' ? 'Reimbursement (Cash)' : 'Cashless Final Claim';
+
     // Add row to Claims Tracker Active Claims Table
     const claimsTbody = document.querySelector('#claims-content-active tbody');
     if (claimsTbody) {
@@ -338,7 +358,7 @@ function submitSubmissionWizard() {
         <td><span class="antd-text-strong">${id}</span></td>
         <td>${name}</td>
         <td>${insurer}</td>
-        <td><span class="antd-tag" style="background: #dcfce7; color: #15803d; font-weight: 600;">New Final Claim</span></td>
+        <td><span class="antd-tag" style="background: ${tagBg}; color: ${tagColor}; font-weight: 600;">${tagText}</span></td>
         <td>${formattedAmount}</td>
         <td><span class="antd-tag antd-tag-success">Submitted (${claimId})</span></td>
         <td>Just now</td>
@@ -347,7 +367,7 @@ function submitSubmissionWizard() {
       claimsTbody.insertBefore(tr, claimsTbody.firstChild);
     }
 
-    // Also show in Pre-Auth table as Final Claim
+    // Also show in Pre-Auth table
     const paTbody = document.getElementById('active-pre-auth-tbody');
     if (paTbody) {
       const tr = document.createElement('tr');
@@ -357,14 +377,18 @@ function submitSubmissionWizard() {
         <td>${procedure}<br><span class="antd-text-tertiary">Inv: ${invoiceNo}</span></td>
         <td>${insurer}</td>
         <td style="font-weight:700;">${formattedAmount}</td>
-        <td><span class="antd-tag antd-tag-success">Final Claim</span></td>
+        <td><span class="antd-tag" style="background: ${tagBg}; color: ${tagColor};">${tagText}</span></td>
         <td>Today</td>
         <td><button class="antd-btn">View</button></td>
       `;
       paTbody.insertBefore(tr, paTbody.firstChild);
     }
 
-    showToastHP(`New hospital claim ${claimId} submitted successfully to ${insurer} for settlement!`, 'success');
+    if (currentMode === 'reimbursement') {
+      showToastHP(`With-Cash Reimbursement claim ${claimId} submitted to ${insurer}!`, 'success');
+    } else {
+      showToastHP(`Cashless Final claim ${claimId} submitted to ${insurer} for settlement!`, 'success');
+    }
   } else {
     const requestId = 'PA-2026-' + Math.floor(1000 + Math.random() * 9000);
     const statusTag = isIcu 
@@ -387,7 +411,7 @@ function submitSubmissionWizard() {
       paTbody.insertBefore(tr, paTbody.firstChild);
     }
 
-    // Also mirror to Claims Tracker table
+    // Mirror to Claims Tracker table
     const claimsTbody = document.querySelector('#claims-content-active tbody');
     if (claimsTbody) {
       const tr = document.createElement('tr');
@@ -395,7 +419,7 @@ function submitSubmissionWizard() {
         <td><span class="antd-text-strong">${id}</span></td>
         <td>${name}</td>
         <td>${insurer}</td>
-        <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+        <td><span class="antd-tag" style="background: var(--antd-bg); color: var(--antd-text-main); font-weight:600;">Cashless Pre-Auth</span></td>
         <td>${formattedAmount}</td>
         <td>${statusTag}</td>
         <td>Just now</td>
@@ -413,7 +437,7 @@ function submitSubmissionWizard() {
     if (isIcu) {
       showToastHP(`Emergency Pre-Auth ${requestId} submitted without patient OTP`, 'success');
     } else {
-      showToastHP(`Pre-authorization request ${requestId} submitted successfully to ${insurer}`, 'success');
+      showToastHP(`Cashless Pre-authorization ${requestId} submitted successfully to ${insurer}`, 'success');
     }
   }
 
