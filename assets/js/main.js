@@ -474,7 +474,7 @@ function doStaffLogin() {
   }, 1200);
 }
 
-// ── Claims Tracker Tab Switching ──────────────────────────────────────────
+// ── Claims Tracker Tab Switching & Filtering ──────────────────────────────
 function switchClaimsTrackerTab(tabId) {
   const tabs = ['active', 'history', 'settlements'];
   tabs.forEach(t => {
@@ -491,4 +491,73 @@ function switchClaimsTrackerTab(tabId) {
       }
     }
   });
+  filterClaimsTable();
+}
+
+function filterClaimsTable() {
+  const query = (document.getElementById('claims-filter-search')?.value || '').toLowerCase().trim();
+  const insurer = document.getElementById('claims-filter-insurer')?.value || '';
+  const status = document.getElementById('claims-filter-status')?.value || '';
+
+  // Apply to active visible tab table
+  const activeTab = document.getElementById('claims-content-history')?.style.display === 'block' ? '#table-claims-history'
+                  : document.getElementById('claims-content-settlements')?.style.display === 'block' ? '#table-claims-settlements'
+                  : '#table-claims-active';
+
+  const table = document.querySelector(activeTab);
+  if (!table) return;
+
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach(tr => {
+    const text = tr.textContent.toLowerCase();
+    const matchQuery = !query || text.includes(query);
+    const matchInsurer = !insurer || text.includes(insurer.toLowerCase());
+    const matchStatus = !status || text.includes(status.toLowerCase());
+    tr.style.display = (matchQuery && matchInsurer && matchStatus) ? '' : 'none';
+  });
+}
+
+function resetClaimsFilters() {
+  const searchEl = document.getElementById('claims-filter-search');
+  const insurerEl = document.getElementById('claims-filter-insurer');
+  const statusEl = document.getElementById('claims-filter-status');
+  if (searchEl) searchEl.value = '';
+  if (insurerEl) insurerEl.value = '';
+  if (statusEl) statusEl.value = '';
+  filterClaimsTable();
+  showToastHP('Filters reset', 'info');
+}
+
+function openClaimProgressModal(claimId, patientName, insurer, amount, status, percent) {
+  const modal = document.getElementById('claim-progress-modal');
+  if (!modal) return;
+
+  const idEl = document.getElementById('modal-claim-id');
+  const subEl = document.getElementById('modal-patient-sub');
+  const labelEl = document.getElementById('modal-progress-label');
+  const tagEl = document.getElementById('modal-status-tag');
+  const barEl = document.getElementById('modal-progress-bar');
+
+  if (idEl) idEl.textContent = `Claim Progress • ${claimId}`;
+  if (subEl) subEl.textContent = `${patientName} • ${insurer} • ${amount}`;
+  if (labelEl) labelEl.textContent = `Lifecycle Progress: ${percent}% Complete`;
+  if (tagEl) {
+    tagEl.textContent = status;
+    tagEl.className = percent === 100 ? 'antd-tag antd-tag-success'
+                    : percent >= 60 ? 'antd-tag antd-tag-info'
+                    : 'antd-tag antd-tag-warning';
+  }
+  if (barEl) {
+    barEl.style.width = percent + '%';
+    barEl.style.background = percent === 100 ? '#10b981'
+                           : percent >= 60 ? 'linear-gradient(90deg, #3b82f6, #2563eb)'
+                           : '#f59e0b';
+  }
+
+  modal.style.display = 'flex';
+}
+
+function closeClaimProgressModal() {
+  const modal = document.getElementById('claim-progress-modal');
+  if (modal) modal.style.display = 'none';
 }

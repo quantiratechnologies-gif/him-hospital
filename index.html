@@ -906,10 +906,39 @@
     </button>
   </div>
 
+  <!-- Filter Toolbar for all 3 internal tabs -->
+  <div class="antd-card antd-mb-6" style="padding: 14px 18px; background: rgba(255,255,255,0.9); border: 1px solid var(--antd-border);">
+    <div class="antd-flex antd-items-center antd-justify-between" style="flex-wrap: wrap; gap: 12px;">
+      <div class="antd-flex antd-items-center antd-gap-2" style="flex: 1; min-width: 260px; flex-wrap: wrap;">
+        <div style="position: relative; width: 100%; max-width: 280px;">
+          <input type="text" id="claims-filter-search" class="antd-input" placeholder="Search patient, ID, insurer..." oninput="filterClaimsTable()" style="width: 100%; margin: 0;">
+        </div>
+        <select id="claims-filter-insurer" class="antd-input" onchange="filterClaimsTable()" style="width: 150px; margin: 0;">
+          <option value="">All Insurers</option>
+          <option value="Star Health">Star Health</option>
+          <option value="HDFC ERGO">HDFC ERGO</option>
+          <option value="ICICI Lombard">ICICI Lombard</option>
+          <option value="Niva Bupa">Niva Bupa</option>
+        </select>
+        <select id="claims-filter-status" class="antd-input" onchange="filterClaimsTable()" style="width: 140px; margin: 0;">
+          <option value="">All Status</option>
+          <option value="Approved">Approved</option>
+          <option value="AI Reviewing">Reviewing</option>
+          <option value="Query">Query Raised</option>
+          <option value="Settled">Settled</option>
+        </select>
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn" onclick="resetClaimsFilters()"><i data-lucide="rotate-ccw" class="icon-sm"></i> Reset</button>
+        <button class="antd-btn antd-btn-primary" onclick="showToastHP('Claims summary exported to CSV','success')"><i data-lucide="download" class="icon-sm"></i> Export CSV</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Tab Content: Active Claims -->
   <div id="claims-content-active">
     <div class="antd-card antd-p-0" style="overflow-x: auto;">
-      <table class="antd-table">
+      <table class="antd-table" id="table-claims-active">
         <thead>
           <tr>
             <th>Patient ID (MR)</th>
@@ -917,8 +946,8 @@
             <th>Insurance Company</th>
             <th>Claim Type</th>
             <th>Amount (₹)</th>
+            <th>Progress & Stage</th>
             <th>Status</th>
-            <th>Last Updated</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -928,50 +957,92 @@
             <td>Rajiv Verma</td>
             <td>Star Health</td>
             <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
-            <td>₹1,45,000</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#16a34a;">Approved</span><span>100%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:100%;height:100%;background:#16a34a;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-success">Approved</span></td>
-            <td>10 mins ago</td>
-            <td><button class="antd-btn">View Docs</button></td>
+            <td>
+              <button class="antd-btn antd-btn-primary antd-btn-sm" onclick="openClaimProgressModal('PA-2026-99421', 'Rajiv Verma', 'Star Health', '₹1,45,000', 'Approved', 100)">
+                Track Progress
+              </button>
+            </td>
           </tr>
           <tr>
             <td><span class="antd-text-strong">88210-B</span></td>
             <td>Sneha Patil</td>
             <td>HDFC ERGO</td>
             <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
-            <td>₹85,000</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#2563eb;">Medical Audit</span><span>65%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:65%;height:100%;background:#2563eb;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
-            <td>1 hr ago</td>
-            <td><button class="antd-btn">View Docs</button></td>
+            <td>
+              <button class="antd-btn antd-btn-primary antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-88210', 'Sneha Patil', 'HDFC ERGO', '₹85,000', 'AI Reviewing', 65)">
+                Track Progress
+              </button>
+            </td>
           </tr>
           <tr>
             <td><span class="antd-text-strong">77102-C</span></td>
             <td>Arun Kumar</td>
             <td>ICICI Lombard</td>
             <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
-            <td>₹2,10,000</td>
+            <td style="font-weight:700;">₹2,10,000</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#ef4444;">Query Pending</span><span>45%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:45%;height:100%;background:#ef4444;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
-            <td>3 hrs ago</td>
-            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply to Query</button></td>
+            <td>
+              <button class="antd-btn antd-btn-primary antd-btn-sm" style="background:#ef4444;border-color:#ef4444;" onclick="openClaimProgressModal('PA-2026-77102', 'Arun Kumar', 'ICICI Lombard', '₹2,10,000', 'Query Raised', 45)">
+                Resolve Query
+              </button>
+            </td>
           </tr>
           <tr>
             <td><span class="antd-text-strong">66005-D</span></td>
             <td>Priya Sharma</td>
             <td>Niva Bupa</td>
             <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
-            <td>₹42,500</td>
+            <td style="font-weight:700;">₹42,500</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#059669;">Bank Paid</span><span>100%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:100%;height:100%;background:#059669;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-success">Settled</span></td>
-            <td>1 day ago</td>
-            <td><button class="antd-btn">View UTR</button></td>
-          </tr>
-          <tr>
-            <td><span class="antd-text-strong">55990-E</span></td>
-            <td>Vikram Singh</td>
-            <td>Reliance General</td>
-            <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
-            <td>₹3,50,000</td>
-            <td><span class="antd-tag" style="background: var(--antd-bg); color: var(--antd-text-secondary);">Draft</span></td>
-            <td>2 days ago</td>
-            <td><button class="antd-btn">Resume</button></td>
+            <td>
+              <button class="antd-btn antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-66005', 'Priya Sharma', 'Niva Bupa', '₹42,500', 'Settled', 100)">
+                View Timeline
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -981,7 +1052,7 @@
   <!-- Tab Content: Claim History -->
   <div id="claims-content-history" style="display: none;">
     <div class="antd-card antd-p-0" style="overflow-x: auto;">
-      <table class="antd-table">
+      <table class="antd-table" id="table-claims-history">
         <thead>
           <tr>
             <th>Claim ID</th>
@@ -989,6 +1060,7 @@
             <th>Insurer</th>
             <th>Type</th>
             <th>Amount</th>
+            <th>Lifecycle Progress</th>
             <th>Status</th>
             <th>Submitted</th>
             <th>Action</th>
@@ -1001,9 +1073,19 @@
             <td>Star Health</td>
             <td><span class="antd-tag">Cashless</span></td>
             <td style="font-weight:700;">₹1,45,000</td>
+            <td>
+              <div style="width:120px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#16a34a;">Completed</span><span>100%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:100%;height:100%;background:#16a34a;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-success">Approved</span></td>
             <td>02 Jul 2026</td>
-            <td><button class="antd-btn">View</button></td>
+            <td><button class="antd-btn antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-0045', 'Rajiv Verma', 'Star Health', '₹1,45,000', 'Approved', 100)">Track Progress</button></td>
           </tr>
           <tr>
             <td><span class="antd-text-strong">CLM-2026-0044</span></td>
@@ -1011,29 +1093,19 @@
             <td>HDFC ERGO</td>
             <td><span class="antd-tag">Reimbursement</span></td>
             <td style="font-weight:700;">₹85,000</td>
+            <td>
+              <div style="width:120px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#f59e0b;">Pending</span><span>50%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:50%;height:100%;background:#f59e0b;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-warning">Pending</span></td>
             <td>28 Jun 2026</td>
-            <td><button class="antd-btn">View</button></td>
-          </tr>
-          <tr>
-            <td><span class="antd-text-strong">CLM-2026-0043</span></td>
-            <td>Arun Kumar</td>
-            <td>ICICI Lombard</td>
-            <td><span class="antd-tag">Cashless</span></td>
-            <td style="font-weight:700;">₹2,10,000</td>
-            <td><span class="antd-tag antd-tag-error">Rejected</span></td>
-            <td>15 Jun 2026</td>
-            <td><button class="antd-btn">View</button></td>
-          </tr>
-          <tr>
-            <td><span class="antd-text-strong">CLM-2026-0042</span></td>
-            <td>Priya Sharma</td>
-            <td>Niva Bupa</td>
-            <td><span class="antd-tag">Cashless</span></td>
-            <td style="font-weight:700;">₹42,500</td>
-            <td><span class="antd-tag antd-tag-success">Settled</span></td>
-            <td>10 Jun 2026</td>
-            <td><button class="antd-btn">View</button></td>
+            <td><button class="antd-btn antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-0044', 'Sneha Patil', 'HDFC ERGO', '₹85,000', 'Pending', 50)">Track Progress</button></td>
           </tr>
         </tbody>
       </table>
@@ -1062,7 +1134,7 @@
     </div>
 
     <div class="antd-card antd-p-0" style="overflow-x: auto;">
-      <table class="antd-table">
+      <table class="antd-table" id="table-claims-settlements">
         <thead>
           <tr>
             <th>UTR / Ref No.</th>
@@ -1070,6 +1142,7 @@
             <th>Insurer</th>
             <th>Claim ID</th>
             <th>Amount</th>
+            <th>Bank Dispersal Progress</th>
             <th>Status</th>
             <th>Settled On</th>
             <th>Action</th>
@@ -1082,9 +1155,19 @@
             <td>Niva Bupa</td>
             <td>CLM-2026-0042</td>
             <td style="font-weight:700;">₹42,500</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#059669;">NEFT Credited</span><span>100%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:100%;height:100%;background:#059669;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-success">Settled</span></td>
             <td>10 Jul 2026</td>
-            <td><button class="antd-btn">Download</button></td>
+            <td><button class="antd-btn antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-0042', 'Priya Sharma', 'Niva Bupa', '₹42,500', 'Settled', 100)">View Receipt</button></td>
           </tr>
           <tr>
             <td><span class="antd-text-strong">UTR789456124</span></td>
@@ -1092,22 +1175,82 @@
             <td>Star Health</td>
             <td>CLM-2026-0045</td>
             <td style="font-weight:700;">₹1,45,000</td>
+            <td>
+              <div style="width:130px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;font-weight:600;">
+                  <span style="color:#f59e0b;">Bank Processing</span><span>80%</span>
+                </div>
+                <div style="width:100%;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                  <div style="width:80%;height:100%;background:#f59e0b;border-radius:4px;"></div>
+                </div>
+              </div>
+            </td>
             <td><span class="antd-tag antd-tag-warning">Processing</span></td>
             <td>—</td>
-            <td><button class="antd-btn">Track</button></td>
-          </tr>
-          <tr>
-            <td><span class="antd-text-strong">UTR789456125</span></td>
-            <td>Sneha Patil</td>
-            <td>HDFC ERGO</td>
-            <td>CLM-2026-0044</td>
-            <td style="font-weight:700;">₹85,000</td>
-            <td><span class="antd-tag antd-tag-info">Initiated</span></td>
-            <td>—</td>
-            <td><button class="antd-btn">Track</button></td>
+            <td><button class="antd-btn antd-btn-sm" onclick="openClaimProgressModal('CLM-2026-0045', 'Rajiv Verma', 'Star Health', '₹1,45,000', 'Processing', 80)">Track UTR</button></td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- Interactive Claim Progress Tracker Modal -->
+  <div id="claim-progress-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#fff; border-radius:12px; width:100%; max-width:620px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.2); overflow:hidden; border:1px solid #e2e8f0;">
+      <div class="antd-flex antd-items-center antd-justify-between" style="background:#f8fafc; padding:16px 20px; border-bottom:1px solid #e2e8f0;">
+        <div>
+          <h3 style="margin:0; font-size:16px; font-weight:700; color:#0f172a;" id="modal-claim-id">Claim Tracker • PA-2026-99421</h3>
+          <p style="margin:2px 0 0; font-size:12px; color:#64748b;" id="modal-patient-sub">Rajiv Verma • Star Health</p>
+        </div>
+        <button class="antd-btn antd-btn-sm" onclick="closeClaimProgressModal()" style="border:none; background:transparent;"><i data-lucide="x" class="icon-sm"></i></button>
+      </div>
+
+      <div style="padding:20px;">
+        <!-- Overall Progress Bar Card -->
+        <div style="background:#f1f5f9; border-radius:8px; padding:14px; margin-bottom:20px;">
+          <div class="antd-flex antd-items-center antd-justify-between" style="margin-bottom:6px;">
+            <span style="font-size:13px; font-weight:700; color:#334155;" id="modal-progress-label">Lifecycle Progress: 65% Complete</span>
+            <span class="antd-tag antd-tag-info" id="modal-status-tag">AI Reviewing</span>
+          </div>
+          <div style="width:100%; height:10px; background:#e2e8f0; border-radius:6px; overflow:hidden;">
+            <div id="modal-progress-bar" style="width:65%; height:100%; background:linear-gradient(90deg, #3b82f6, #2563eb); border-radius:6px; transition:width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <!-- 4-Stage Interactive Milestones -->
+        <div style="border-left:2px solid #cbd5e1; margin-left:14px; padding-left:20px; position:relative;">
+          <!-- Stage 1 -->
+          <div style="margin-bottom:20px; position:relative;">
+            <div style="position:absolute; left:-27px; top:0; width:14px; height:14px; border-radius:50%; background:#10b981; border:2px solid #fff;"></div>
+            <h4 style="margin:0; font-size:13px; font-weight:700; color:#0f172a;">1. Hospital Submission & Verification</h4>
+            <p style="margin:2px 0 0; font-size:12px; color:#64748b;">Insurance policy verified & pre-auth documents digitally signed.</p>
+          </div>
+          <!-- Stage 2 -->
+          <div style="margin-bottom:20px; position:relative;">
+            <div style="position:absolute; left:-27px; top:0; width:14px; height:14px; border-radius:50%; background:#3b82f6; border:2px solid #fff;"></div>
+            <h4 style="margin:0; font-size:13px; font-weight:700; color:#0f172a;">2. TPA Medical Desk Audit</h4>
+            <p style="margin:2px 0 0; font-size:12px; color:#64748b;">Medical reviewer checking ICD-10 diagnosis and package tariff limits.</p>
+          </div>
+          <!-- Stage 3 -->
+          <div style="margin-bottom:20px; position:relative;">
+            <div style="position:absolute; left:-27px; top:0; width:14px; height:14px; border-radius:50%; background:#f59e0b; border:2px solid #fff;"></div>
+            <h4 style="margin:0; font-size:13px; font-weight:700; color:#0f172a;">3. Pre-Authorization Approval Letter</h4>
+            <p style="margin:2px 0 0; font-size:12px; color:#64748b;">Insurer decision letter issued for cashless hospital care.</p>
+          </div>
+          <!-- Stage 4 -->
+          <div style="position:relative;">
+            <div style="position:absolute; left:-27px; top:0; width:14px; height:14px; border-radius:50%; background:#94a3b8; border:2px solid #fff;"></div>
+            <h4 style="margin:0; font-size:13px; font-weight:700; color:#0f172a;">4. Settlement & Bank UTR Credit</h4>
+            <p style="margin:2px 0 0; font-size:12px; color:#64748b;">Final discharge invoice reconciled and NEFT/RTGS transferred to hospital.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="antd-flex antd-items-center antd-justify-end antd-gap-2" style="background:#f8fafc; padding:14px 20px; border-top:1px solid #e2e8f0;">
+        <button class="antd-btn" onclick="showToastHP('Expedite notification dispatched to TPA desk','info')"><i data-lucide="zap" class="icon-sm"></i> Expedite Review</button>
+        <button class="antd-btn antd-btn-primary" onclick="showToastHP('Claim audit trail report downloaded','success')"><i data-lucide="download" class="icon-sm"></i> Download Audit Report</button>
+        <button class="antd-btn" onclick="closeClaimProgressModal()">Close</button>
+      </div>
     </div>
   </div>
 </div>
