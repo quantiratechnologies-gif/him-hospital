@@ -1,0 +1,88 @@
+<div class="screen hp-screen" id="screen-patient-verification">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="user-check" class="icon-sm"></i> Patient
+        Verification</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Verify patient identity and insurance eligibility before
+        treatment</p>
+    </div>
+  </div>
+
+  <div class="antd-grid-2 antd-mb-6">
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Search Patient</h3>
+      <div class="antd-flex antd-gap-2 antd-mb-4">
+        <input type="text" class="antd-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
+        <button class="antd-btn antd-btn-primary"><i data-lucide="search" class="icon-sm"></i> Verify</button>
+      </div>
+      <div class="antd-alert"
+        style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;color:#166534;font-size:13px;">
+        <strong>Demo:</strong> Try MR number <code>99421-A</code> or mobile <code>9876543210</code>
+      </div>
+    </div>
+
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Quick Eligibility Check</h3>
+      <div class="antd-form-group">
+        <label class="antd-label">Insurance Company</label>
+        <select class="antd-input">
+          <option>Select Insurer</option>
+          <option>Star Health</option>
+          <option>HDFC ERGO</option>
+          <option>ICICI Lombard</option>
+          <option>Niva Bupa</option>
+        </select>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Policy Number</label>
+        <input type="text" class="antd-input" placeholder="e.g. MED-2394-A">
+      </div>
+      <button class="antd-btn antd-btn-primary" style="width:100%;"
+        onclick="showToastHP('Eligibility check initiated','success')">
+        <i data-lucide="shield-check" class="icon-sm"></i> Check Eligibility
+      </button>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Recent Verifications</h3>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Insurer</th>
+          <th>Policy</th>
+          <th>Status</th>
+          <th>Verified On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">99421-A</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td>MED-2394-A</td>
+          <td><span class="antd-tag antd-tag-success">Eligible</span></td>
+          <td>10 Jul 2026, 09:15</td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">88210-B</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td>HDFC-2947-1234</td>
+          <td><span class="antd-tag antd-tag-success">Eligible</span></td>
+          <td>10 Jul 2026, 08:42</td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">77102-C</span></td>
+          <td>Arun Kumar</td>
+          <td>ICICI Lombard</td>
+          <td>ICL-8812-X</td>
+          <td><span class="antd-tag antd-tag-error">Not Found</span></td>
+          <td>09 Jul 2026, 16:20</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

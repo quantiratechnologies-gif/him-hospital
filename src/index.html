@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaimOnTime — Hospital Provider Portal</title>
+  <meta name="description"
+    content="AI-powered hospital claims workstation. Pre-authorization, patient verification, document upload, and settlement tracking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Shared Design System (same as patient portal) -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+  <link href="assets/css/antd.css" rel="stylesheet" />
+  <!-- Hospital-specific overrides & components -->
+  <link href="assets/css/hospital.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- ═══ LOGIN SCREEN ═══════════════════════════════════════════════════════ -->
+  <!-- INCLUDE components/layout/login.html -->
+
+  <!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
+  <div class="app-container" id="hp-app" style="display: none;">
+
+    <!-- Sidebar -->
+    <!-- INCLUDE components/layout/sidebar.html -->
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+
+      <!-- Topbar -->
+      <!-- INCLUDE components/layout/topbar.html -->
+
+      <!-- Content Area -->
+      <div class="app-content" id="hp-content">
+
+        <!-- INCLUDE components/screens/screen-dashboard.html -->
+        <!-- INCLUDE components/screens/screen-patient-verification.html -->
+        <!-- INCLUDE components/screens/screen-admission.html -->
+        <!-- INCLUDE components/screens/screen-pre-auth.html -->
+        <!-- INCLUDE components/screens/screen-document-upload.html -->
+        <!-- INCLUDE components/screens/screen-ai-optimizer.html -->
+        <!-- INCLUDE components/screens/screen-active-claims.html -->
+        <!-- INCLUDE components/screens/screen-claim-history.html -->
+        <!-- INCLUDE components/screens/screen-rejections.html -->
+        <!-- INCLUDE components/screens/screen-settlements.html -->
+        <!-- INCLUDE components/screens/screen-notifications.html -->
+        <!-- INCLUDE components/screens/screen-settings.html -->
+
+      </div><!-- /app-content -->
+    </div><!-- /app-main -->
+  </div><!-- /app-container -->
+
+  <!-- Toast container -->
+  <div id="hp-toast-container" class="toast-container"></div>
+
+  <!-- Main JS -->
+  <script src="assets/js/main.js?v=2"></script>
+
+</body>
+
+</html>

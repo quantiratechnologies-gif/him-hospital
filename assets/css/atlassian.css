@@ -1,0 +1,178 @@
+/* ==========================================================================
+   ATLASSIAN DESIGN SYSTEM (ADS) OVERRIDES
+   ========================================================================== */
+
+:root {
+  /* ADS Typography */
+  --ads-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  
+  /* ADS Colors */
+  --ads-blue: #0052CC;
+  --ads-blue-hover: #0047B3;
+  --ads-green: #00875A;
+  --ads-red: #DE350B;
+  --ads-orange: #FF991F;
+  --ads-neutral-bg: #F4F5F7;
+  --ads-surface: #FFFFFF;
+  --ads-surface-hover: #FAFBFC;
+  --ads-border: #DFE1E6;
+  
+  /* ADS Text Colors */
+  --ads-text-main: #172B4D;
+  --ads-text-subtle: #5E6C84;
+  --ads-text-light: #97A0AF;
+  
+  /* ADS Elevation */
+  --ads-shadow-raised: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  --ads-shadow-overlay: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+}
+
+body {
+  font-family: var(--ads-font) !important;
+  color: var(--ads-text-main) !important;
+  background-color: var(--ads-neutral-bg) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--ads-text-main) !important;
+  font-weight: 500 !important;
+}
+
+/* --------------------------------------------------------------------------
+   ADS COMPONENT OVERRIDES
+   -------------------------------------------------------------------------- */
+
+/* Topbar */
+.app-topbar {
+  background-color: var(--ads-surface) !important;
+  border-bottom: 1px solid var(--ads-border) !important;
+  box-shadow: 0 1px 1px rgba(9, 30, 66, 0.1) !important;
+}
+
+/* Sidebar */
+.app-sidebar {
+  background-color: var(--ads-neutral-bg) !important;
+  border-right: 1px solid var(--ads-border) !important;
+  color: var(--ads-text-main) !important;
+}
+.app-sidebar .sidebar-logo {
+  color: var(--ads-text-main) !important;
+}
+.app-nav-link {
+  color: var(--ads-text-main) !important;
+  font-weight: 500;
+  border-radius: 3px;
+  margin: 2px 8px;
+  padding: 8px 12px;
+}
+.app-nav-link:hover {
+  background-color: #EBECF0 !important;
+  color: var(--ads-text-main) !important;
+}
+.app-nav-link.active {
+  background-color: #E9F2FF !important;
+  color: var(--ads-blue) !important;
+  border-left: none !important;
+}
+
+/* Cards (Elevation Surface Raised) */
+.ads-card {
+  background-color: var(--ads-surface);
+  border-radius: 3px;
+  box-shadow: var(--ads-shadow-raised);
+  padding: 16px;
+  border: none !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+.ads-card:hover {
+  box-shadow: var(--ads-shadow-overlay);
+}
+
+/* Typography Utilities */
+.ads-text-h400 { font-size: 14px; font-weight: 600; color: var(--ads-text-main); margin-bottom: 8px; }
+.ads-text-subtle { color: var(--ads-text-subtle); font-size: 12px; }
+.ads-text-large { font-size: 24px; font-weight: 500; color: var(--ads-text-main); margin-bottom: 4px; }
+
+/* Buttons */
+.ads-btn {
+  background-color: rgba(9, 30, 66, 0.04);
+  color: var(--ads-text-main);
+  border: none;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.1s;
+}
+.ads-btn:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+}
+.ads-btn-primary {
+  background-color: var(--ads-blue) !important;
+  color: #FFFFFF !important;
+}
+.ads-btn-primary:hover {
+  background-color: var(--ads-blue-hover) !important;
+}
+
+/* Lozenges (Badges) */
+.ads-lozenge {
+  display: inline-flex;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ads-lozenge-success { background-color: #E3FCEF; color: #006644; }
+.ads-lozenge-warning { background-color: #FFF0B3; color: #172B4D; }
+.ads-lozenge-danger { background-color: #FFEBE6; color: #BF2600; }
+.ads-lozenge-info { background-color: #DEEBFF; color: #0747A6; }
+
+/* Dashboard Grids */
+.ads-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ads-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 1024px) {
+  .ads-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Spacing */
+.ads-mb-2 { margin-bottom: 8px; }
+.ads-mb-4 { margin-bottom: 16px; }
+.ads-mb-6 { margin-bottom: 24px; }
+.ads-mt-4 { margin-top: 16px; }
+.ads-mt-6 { margin-top: 24px; }
+.ads-p-4 { padding: 16px; }
+.ads-p-0 { padding: 0 !important; }
+
+/* Flex */
+.ads-flex { display: flex; }
+.ads-flex-col { flex-direction: column; }
+.ads-items-center { align-items: center; }
+.ads-justify-between { justify-content: space-between; }
+.ads-gap-2 { gap: 8px; }
+
+/* Tables */
+.ads-table { width: 100%; border-collapse: collapse; }
+.ads-table th { 
+  text-align: left; 
+  padding: 12px 16px; 
+  border-bottom: 2px solid var(--ads-border); 
+  color: var(--ads-text-subtle);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.ads-table td { 
+  padding: 12px 16px; 
+  border-bottom: 1px solid var(--ads-border); 
+  color: var(--ads-text-main);
+  font-size: 14px;
+}
+.ads-table tr:hover td { background-color: var(--ads-surface-hover); }

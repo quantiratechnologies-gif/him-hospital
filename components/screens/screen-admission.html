@@ -1,0 +1,116 @@
+<div class="screen hp-screen" id="screen-admission">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="home" class="icon-sm"></i> Admissions</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Insurance patients currently admitted — initiate pre-auth
+        before discharge</p>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New admission form opened','info')">
+      <i data-lucide="plus" class="icon-sm"></i> Register Admission
+    </button>
+  </div>
+
+  <div class="antd-grid-4 antd-mb-6">
+    <div class="antd-card" style="background:#fff7ed;border-color:#fed7aa;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#ea580c;">4</div>
+      <div class="antd-tag antd-tag-warning">Pre-Auth Pending</div>
+    </div>
+    <div class="antd-card" style="background:#f0fdf4;border-color:#bbf7d0;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#16a34a;">11</div>
+      <div class="antd-tag antd-tag-success">Pre-Auth Approved</div>
+    </div>
+    <div class="antd-card" style="background:#eff6ff;border-color:#bfdbfe;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#2563eb;">3</div>
+      <div class="antd-tag antd-tag-info">Discharge Today</div>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-justify-between"
+      style="padding:16px 20px;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Current Inpatients (Insurance)</h3>
+      <div class="antd-flex antd-gap-2">
+        <input type="text" class="antd-input" placeholder="Search patient..." style="width:200px;margin:0;">
+        <select class="antd-input" style="width:130px;margin:0;">
+          <option>All Wards</option>
+          <option>Cardiology</option>
+          <option>Orthopaedics</option>
+          <option>Surgery</option>
+        </select>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="antd-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Ward / Doctor</th>
+            <th>Insurer / Policy</th>
+            <th>Admitted</th>
+            <th>Est. Discharge</th>
+            <th>Est. Cost</th>
+            <th>Pre-Auth Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="antd-text-strong">Rajiv Verma</span><br><span class="antd-text-tertiary">MR: 99421-A • Age
+                52</span></td>
+            <td>Cardiology<br><span class="antd-text-tertiary">Dr. Mehta</span></td>
+            <td>Star Health<br><span class="antd-text-tertiary">MED-2394-A</span></td>
+            <td>08 Jul</td>
+            <td>12 Jul</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td><span class="antd-tag antd-tag-warning">Pending</span></td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('pre-auth')">Initiate</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Sneha Patil</span><br><span class="antd-text-tertiary">MR: 88210-B • Age
+                34</span></td>
+            <td>Orthopaedics<br><span class="antd-text-tertiary">Dr. Verma</span></td>
+            <td>HDFC ERGO<br><span class="antd-text-tertiary">HDFC-2947-1234</span></td>
+            <td>09 Jul</td>
+            <td>14 Jul</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+            <td><button class="antd-btn antd-btn-primary">Fast-Track</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Arun Kumar</span><br><span class="antd-text-tertiary">MR: 77102-C • Age
+                45</span></td>
+            <td>General Surgery<br><span class="antd-text-tertiary">Dr. Rao</span></td>
+            <td>ICICI Lombard<br><span class="antd-text-tertiary">ICL-8812-X</span></td>
+            <td>10 Jul</td>
+            <td>13 Jul</td>
+            <td style="font-weight:700;">₹2,10,000</td>
+            <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Priya Mehta</span><br><span class="antd-text-tertiary">MR: 65432-D • Age
+                29</span></td>
+            <td>Gynaecology<br><span class="antd-text-tertiary">Dr. Sharma</span></td>
+            <td>Bajaj Allianz<br><span class="antd-text-tertiary">BAJ-5521-Z</span></td>
+            <td>09 Jul</td>
+            <td>10 Jul</td>
+            <td style="font-weight:700;">₹55,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td><button class="antd-btn">Final Bill</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Suresh Iyer</span><br><span class="antd-text-tertiary">MR: 54321-E • Age
+                67</span></td>
+            <td>Ophthalmology<br><span class="antd-text-tertiary">Dr. Pillai</span></td>
+            <td>New India<br><span class="antd-text-tertiary">NIA-3302-B</span></td>
+            <td>10 Jul</td>
+            <td>11 Jul</td>
+            <td style="font-weight:700;">₹28,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td><button class="antd-btn">Final Bill</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

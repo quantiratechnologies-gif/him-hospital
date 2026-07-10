@@ -1,0 +1,85 @@
+<div class="screen hp-screen" id="screen-pre-auth">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Submit and track pre-authorization requests</p>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New pre-auth form opened','info')">
+      <i data-lucide="plus" class="icon-sm"></i> New Pre-Auth
+    </button>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-justify-between"
+      style="padding:16px 20px;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Active Pre-Auth Requests</h3>
+      <div class="antd-flex antd-gap-2">
+        <input type="text" class="antd-input" placeholder="Search..." style="width:180px;margin:0;">
+        <select class="antd-input" style="width:130px;margin:0;">
+          <option>All Status</option>
+          <option>Pending</option>
+          <option>Approved</option>
+          <option>Query</option>
+        </select>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="antd-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Patient</th>
+            <th>Procedure</th>
+            <th>Insurer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Submitted</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0142</span></td>
+            <td>Rajiv Verma</td>
+            <td>Laparoscopic Cholecystectomy</td>
+            <td>Star Health</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td>09 Jul 2026</td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0141</span></td>
+            <td>Sneha Patil</td>
+            <td>Total Knee Replacement</td>
+            <td>HDFC ERGO</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0140</span></td>
+            <td>Arun Kumar</td>
+            <td>Laparoscopic Hernia Repair</td>
+            <td>ICICI Lombard</td>
+            <td style="font-weight:700;">₹65,000</td>
+            <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0139</span></td>
+            <td>Priya Mehta</td>
+            <td>Laparoscopic Hysterectomy</td>
+            <td>Bajaj Allianz</td>
+            <td style="font-weight:700;">₹55,000</td>
+            <td><span class="antd-tag antd-tag-warning">Pending</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn">Track</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

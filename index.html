@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaimOnTime — Hospital Provider Portal</title>
+  <meta name="description"
+    content="AI-powered hospital claims workstation. Pre-authorization, patient verification, document upload, and settlement tracking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Shared Design System (same as patient portal) -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+  <link href="assets/css/antd.css" rel="stylesheet" />
+  <!-- Hospital-specific overrides & components -->
+  <link href="assets/css/hospital.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- ═══ LOGIN SCREEN ═══════════════════════════════════════════════════════ -->
+  <div class="hp-login-shell" id="hp-login-screen">
+
+  <!-- Left Side: Brand Panel -->
+  <div class="hp-login-left">
+    <div style="position:relative;z-index:1;max-width:520px;">
+      <!-- Logo -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:48px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 491.4 97.8"
+          style="height:24px;width:auto;filter:brightness(0) invert(1);">
+          <polygon fill="#36b286" points="73.5 91.9 51.6 90.7 67 5.5 89 6.7 73.5 91.9" />
+          <path fill="#ffffff"
+            d="M140.5,29.6l-3.3,18.1-35.8-1.9-30,52.1-9.9-3.2-10.1-3.3,16.1-28,8.8-15.2c7.3-12.6,23.4-20.6,39.8-19.7l24.3,1.3Z" />
+          <path fill="#36b286"
+            d="M89.1,6.5l-16.3,28.3-8.6,14.9c-7.3,12.6-23.4,20.6-39.8,19.7l-24.4-1.3,3.3-18.1,35.9,1.9L69.1,0l19.9,6.5Z" />
+        </svg>
+        <div>
+          <div style="font-size:18px;font-weight:800;color:white;line-height:1;">ClaimOnTime</div>
+          <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Hospital Provider
+            Portal</div>
+        </div>
+      </div>
+
+      <h1 style="font-size:48px;font-weight:800;color:white;line-height:1.1;margin-bottom:20px;letter-spacing:-2px;">
+        Cashless claims<br>
+        <span
+          style="background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">in
+          minutes, not days</span>
+      </h1>
+
+      <p style="font-size:16px;color:#94a3b8;line-height:1.6;margin-bottom:40px;">
+        AI-powered pre-authorization, real-time TPA integration, and intelligent document processing — built for
+        hospital insurance desks.
+      </p>
+
+      <!-- Feature bullets -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div
+            style="width:32px;height:32px;background:rgba(99,179,237,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="16" height="16" fill="none" stroke="#63b3ed" stroke-width="2" viewBox="0 0 24 24">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+          </div>
+          <span style="color:#e2e8f0;font-size:14px;">AI validates pre-auth against policy rules before
+            submission</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div
+            style="width:32px;height:32px;background:rgba(99,179,237,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="16" height="16" fill="none" stroke="#63b3ed" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+          </div>
+          <span style="color:#e2e8f0;font-size:14px;">Auto-categorizes 100-page hospital bills into structured
+            data</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div
+            style="width:32px;height:32px;background:rgba(99,179,237,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="16" height="16" fill="none" stroke="#63b3ed" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <span style="color:#e2e8f0;font-size:14px;">Real-time eligibility check across all major TPAs</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;">
+        <div
+          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:white;">10K+</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">Hospitals</div>
+        </div>
+        <div
+          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:white;">92%</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">AI Accuracy</div>
+        </div>
+        <div
+          style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:24px;font-weight:800;color:white;">4h</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">Avg Approval</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Side: Login Form -->
+  <div class="hp-login-right">
+    <div style="max-width:360px;width:100%;margin:0 auto;">
+      <div style="margin-bottom:28px;">
+        <h2 style="font-size:24px;font-weight:800;color:#1e293b;margin:0 0 6px;">Hospital Staff Login</h2>
+        <p style="font-size:14px;color:#64748b;margin:0;">Sign in to access the claims workstation</p>
+      </div>
+
+      <!-- Tabs -->
+      <div style="display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:24px;">
+        <div id="login-tab-staff"
+          style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid #2563eb;color:#2563eb;transition:all 0.15s;"
+          onclick="selectLoginMode('staff')">Staff Login</div>
+        <div id="login-tab-onboard"
+          style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:#64748b;transition:all 0.15s;"
+          onclick="selectLoginMode('onboard')">New Hospital</div>
+      </div>
+
+      <!-- Staff Login Form -->
+      <div id="login-form-staff">
+        <div class="hp-form-group">
+          <label class="hp-label">Work Email</label>
+          <input class="hp-input" id="login-email" type="email" placeholder="dr.sharma@apollohospitals.com" />
+        </div>
+        <div class="hp-form-group">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <label class="hp-label" style="margin:0;">Password</label>
+            <a href="#" style="font-size:12px;color:#2563eb;text-decoration:none;">Forgot password?</a>
+          </div>
+          <input class="hp-input" id="login-password" type="password" placeholder="••••••••" />
+        </div>
+        <button class="hp-btn hp-btn-primary" id="login-submit-btn"
+          style="width:100%;height:44px;font-size:14px;border-radius:8px;margin-bottom:20px;" onclick="doStaffLogin()">
+          Sign In to Hospital Desk
+        </button>
+        <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px;">
+          <p style="font-size:12px;color:#64748b;margin:0;">Demo: any email + any password</p>
+          <button class="hp-btn hp-btn-secondary hp-btn-sm" style="margin-top:8px;width:100%;"
+            onclick="document.getElementById('login-email').value='dr.sharma@apollo.com';document.getElementById('login-password').value='demo1234';">Fill
+            Demo Credentials</button>
+        </div>
+      </div>
+
+      <!-- Onboard Form -->
+      <div id="login-form-onboard" style="display:none;">
+        <div class="hp-form-group">
+          <label class="hp-label">Hospital Name</label>
+          <input class="hp-input" placeholder="e.g. City Hospital, Banjara Hills" />
+        </div>
+        <div class="hp-form-group">
+          <label class="hp-label">ROHINI / Hospital ID</label>
+          <input class="hp-input" placeholder="e.g. HOSP-XXX-001" />
+        </div>
+        <div class="hp-form-group">
+          <label class="hp-label">Contact Person Email</label>
+          <input class="hp-input" type="email" placeholder="billing@hospital.com" />
+        </div>
+        <div class="hp-form-group">
+          <label class="hp-label">Mobile Number</label>
+          <input class="hp-input" placeholder="+91 98765 43210" />
+        </div>
+        <button class="hp-btn hp-btn-primary" style="width:100%;height:44px;font-size:14px;border-radius:8px;"
+          onclick="doOnboardRequest()">
+          Request Onboarding
+        </button>
+        <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;">Our team will verify and activate
+          your account within 24-48 hours</p>
+      </div>
+
+      <div style="margin-top:24px;text-align:center;padding-top:20px;border-top:1px solid #e2e8f0;">
+        <a href="http://localhost:3000/" style="font-size:13px;color:#64748b;text-decoration:none;">
+          ← Back to Patient Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
+  <div class="app-container" id="hp-app" style="display: none;">
+
+    <!-- Sidebar -->
+    <div class="app-sidebar" id="hp-sidebar" style="display:flex;flex-direction:column;height:100vh;">
+  <!-- Logo -->
+  <div class="sidebar-logo-container"
+    style="height:64px;flex-shrink:0;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.05);gap:10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 491.4 97.8" style="height:20px;width:auto;">
+      <polygon fill="#36b286" points="73.5 91.9 51.6 90.7 67 5.5 89 6.7 73.5 91.9" />
+      <path fill="#ffffff"
+        d="M140.5,29.6l-3.3,18.1-35.8-1.9-30,52.1-9.9-3.2-10.1-3.3,16.1-28,8.8-15.2c7.3-12.6,23.4-20.6,39.8-19.7l24.3,1.3Z" />
+      <path fill="#36b286"
+        d="M89.1,6.5l-16.3,28.3-8.6,14.9c-7.3,12.6-23.4,20.6-39.8,19.7l-24.4-1.3,3.3-18.1,35.9,1.9L69.1,0l19.9,6.5Z" />
+      <path fill="#ffffff"
+        d="M180,71.6c-1.6.6-3.3,1.1-5.1,1.3-1.8.3-3.9.4-6.3.4s-5.8-.3-7.8-1c-2-.7-3.6-1.8-4.8-3.5-1.2-1.6-2-3.8-2.5-6.6-.5-2.8-.7-6.3-.7-10.5s.3-7.8.8-10.6c.5-2.8,1.4-5,2.6-6.6,1.2-1.6,2.9-2.7,5-3.4,2.2-.7,4.9-1,8.2-1s2.1,0,3.4.2c1.3.1,2.5.3,3.7.5,1.2.2,2.2.5,2.9.8l-1.1,6.6c-1-.3-2.1-.5-3.4-.7-1.3-.2-2.5-.3-3.6-.4-1.1-.1-2.1-.2-2.8-.2-2.5,0-4.3.3-5.4.9-1.1.6-1.6,2-1.6,4v23.8c1.1.3,2.3.5,3.5.6,1.2.2,2.5.2,3.8.2s3.6-.2,5.4-.5c1.8-.3,3.5-.7,5.1-1.2l.7,6.7Z" />
+      <path fill="#ffffff"
+        d="M190.8,66.4c.4,0,.9.2,1.5.2.5,0,1.1.1,1.6.2l-.5,5.5c-1,.3-1.9.5-2.7.6-.8.1-1.6.2-2.3.2-1.9,0-3.4-.5-4.3-1.4-.9-.9-1.4-2.3-1.4-4.1V29.4l8.1-1v37.9Z" />
+      <path fill="#ffffff"
+        d="M205.7,73.1c-3.7,0-6.4-.8-8-2.4-1.6-1.6-2.4-4.2-2.4-7.8s.2-4.1.7-5.4c.5-1.4,1.4-2.5,2.7-3.2,1.3-.7,3.2-1.3,5.7-1.6,2.5-.3,5.7-.4,9.6-.4h3.2v4.8h-9.4c-2,0-3.3.3-4.1.8-.7.5-1.1,1.5-1.1,2.9v6.4h7.5c2,0,3.3-.2,4.1-.7.7-.5,1.1-1.4,1.1-2.8v-18.1c-1.4-.4-3.4-.7-5.9-.7s-3.7.1-5.6.4c-2,.3-3.9.7-6,1.3l-1.1-5.8c1.2-.4,2.6-.8,4.1-1.1s3.1-.5,4.8-.7c1.7-.2,3.3-.2,4.9-.2,3.1,0,5.6.3,7.5,1,1.9.6,3.3,1.7,4.1,3.1.8,1.4,1.3,3.3,1.3,5.7v24h-3.9l-2.1-3.3c-1.6,1.4-3.3,2.4-5.2,3-1.9.7-4.1,1-6.4,1Z" />
+      <path fill="#ffffff"
+        d="M233.9,34.2c-1.8,0-3.1-.3-3.8-1-.7-.6-1-1.9-1-3.7s.3-3.1,1-3.8c.7-.7,1.9-1,3.8-1s3,.3,3.7,1c.7.7,1,1.9,1,3.8s-.3,3-1,3.7c-.6.6-1.9,1-3.7,1ZM229.8,40.1l8.1-1.1v33.4h-8.1v-32.3Z" />
+      <path fill="#ffffff"
+        d="M244.7,72.3v-33h3.8l2.2,3.3c1.6-1.4,3.4-2.4,5.3-3,1.9-.7,4.1-1,6.5-1s5.4.5,7.1,1.6c1.6,1,2.4,2.5,2.4,4.5v27.7h-8.1v-27.1h-6.2c-1.8,0-3.1.2-3.8.7s-1.1,1.4-1.1,2.7v23.7h-8.1ZM263.9,72.3v-33l5.9,3.3c1.6-1.4,3.4-2.4,5.3-3,1.9-.7,4.1-1,6.5-1s5.4.5,7.1,1.6c1.6,1,2.4,2.5,2.4,4.5v27.7h-8.1v-27.1h-6.2c-1.8,0-3.1.2-3.8.7-.7.5-1.1,1.4-1.1,2.7v23.7h-8.1Z" />
+      <path fill="#ffffff"
+        d="M295.9,51.7c0-4.4.3-8,.8-10.8.5-2.8,1.4-5,2.6-6.6s3-2.7,5.3-3.3c2.3-.6,5.2-.9,8.7-.9s6.4.3,8.6.9c2.3.6,4.1,1.7,5.3,3.3,1.3,1.6,2.1,3.8,2.7,6.6.5,2.8.8,6.4.8,10.8s-.3,8-.8,10.8c-.5,2.8-1.4,5-2.7,6.6-1.3,1.6-3,2.7-5.3,3.3-2.3.6-5.2.9-8.6.9s-6.5-.3-8.7-.9c-2.3-.6-4-1.7-5.3-3.3s-2.1-3.8-2.6-6.6c-.5-2.8-.8-6.4-.8-10.8ZM304.6,66.4h11.8c2.1,0,3.6-.3,4.4-1,.8-.7,1.2-1.8,1.2-3.5v-24.9h-11.9c-2.1,0-3.5.3-4.3,1s-1.2,1.8-1.2,3.5v24.9Z" />
+      <path fill="#ffffff"
+        d="M335.9,72.3v-33h3.8l2.2,3.3c1.7-1.4,3.6-2.4,5.6-3,2-.7,4.3-1,6.9-1s5.4.5,7.1,1.6c1.6,1,2.4,2.5,2.4,4.5v27.7h-8.1v-27.1h-6.9c-1.8,0-3.1.2-3.8.7s-1.1,1.4-1.1,2.7v23.7h-8.1Z" />
+      <path fill="#36b286" d="M384.3,37.8v34.5h-8.1v-34.5h-10.5v-6.7h29.1v6.7h-10.5Z" />
+      <path fill="#36b286"
+        d="M401.2,34.2c-1.8,0-3.1-.3-3.8-1-.7-.6-1-1.9-1-3.7s.3-3.1,1-3.8,1.9-1,3.8-1,3,.3,3.7,1,1,1.9,1,3.8-.3,3-1,3.7-1.9,1-3.7,1ZM397.1,40.1l8.1-1.1v33.4h-8.1v-32.3Z" />
+      <path fill="#36b286"
+        d="M411.9,72.3v-33h3.8l2.2,3.3c1.6-1.4,3.4-2.4,5.3-3,1.9-.7,4.1-1,6.5-1s5.4.5,7.1,1.6c1.6,1,2.4,2.5,2.4,4.5v27.7h-8.1v-27.1h-6.2c-1.8,0-3.1.2-3.8.7s-1.1,1.4-1.1,2.7v23.7h-8.1ZM431.1,72.3v-33l5.9,3.3c1.6-1.4,3.4-2.4,5.3-3,1.9-.7,4.1-1,6.5-1s5.4.5,7.1,1.6c1.6,1,2.4,2.5,2.4,4.5v27.7h-8.1v-27.1h-6.2c-1.8,0-3.1.2-3.8.7-.7.5-1.1,1.4-1.1,2.7v23.7h-8.1Z" />
+      <path fill="#36b286"
+        d="M476.7,73.1c-2.6,0-4.8-.3-6.6-.9-1.8-.6-3.2-1.5-4.3-2.8-1.1-1.3-1.8-3.1-2.3-5.3-.5-2.2-.7-5-.7-8.3s.5-7.7,1.4-10.2c.9-2.5,2.5-4.3,4.7-5.4,2.2-1.1,5.1-1.6,8.7-1.6s6.3.3,8.3.9c2,.6,3.4,1.6,4.2,3.1.8,1.5,1.2,3.5,1.2,6.2s-.3,4.1-.8,5.4c-.5,1.4-1.5,2.5-2.9,3.2-1.4.7-3.4,1.3-6,1.6-2.6.3-6,.4-10.2.4h-2v-4.8h9.2c2.1,0,3.5-.3,4.2-.8s1.1-1.5,1.1-2.9v-6h-7.3c-2,0-3.4.2-4.2.7-.7.5-1.1,1.4-1.1,2.8v17.7c.9.2,1.8.4,2.8.5,1,.1,2.2.2,3.7.2s3.6-.1,5.3-.4c1.8-.3,3.8-.7,6.1-1.3l1.1,5.8c-1.8.7-3.9,1.2-6.3,1.5s-4.9.5-7.5.5Z" />
+    </svg>
+  </div>
+  <!-- Hospital Info Strip -->
+  <div
+    style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;background:rgba(255,255,255,0.03);">
+    <div
+      style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
+      id="sb-hosp-name">Medanta - The Medicity, Gurugram</div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;">HOSP-MED-001 · TPA Desk</div>
+    <div
+      style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:20px;font-size:9px;font-weight:600;color:#34d399;margin-top:6px;">
+      <span style="width:5px;height:5px;background:#34d399;border-radius:50%;"></span>
+      AI Engine Active
+    </div>
+  </div>
+  <!-- Navigation -->
+  <div style="flex:1;overflow-y:auto;padding-top:12px;">
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:0 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      Overview</p>
+    <a class="app-nav-link active" id="nav-dashboard" onclick="showScreen('dashboard')"><i data-lucide="home"
+        class="icon-sm"></i> Dashboard</a>
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      Patient Services</p>
+    <a class="app-nav-link" id="nav-patient-verification" onclick="showScreen('patient-verification')"><i
+        data-lucide="user-check" class="icon-sm"></i> Patient Verification</a>
+    <a class="app-nav-link" id="nav-admission" onclick="showScreen('admission')"><i data-lucide="home"
+        class="icon-sm"></i> Admissions <span
+        style="margin-left:auto;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">4</span></a>
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      AI Claim Tools</p>
+    <a class="app-nav-link" id="nav-pre-auth" onclick="showScreen('pre-auth')"><i data-lucide="shield"
+        class="icon-sm"></i> Pre-Authorization <span
+        style="margin-left:auto;background:#f59e0b;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">12</span></a>
+    <a class="app-nav-link" id="nav-document-upload" onclick="showScreen('document-upload')"><i data-lucide="upload"
+        class="icon-sm"></i> Document Upload</a>
+    <a class="app-nav-link" id="nav-ai-optimizer" onclick="showScreen('ai-optimizer')"><i data-lucide="zap"
+        class="icon-sm"></i> AI Description Fix</a>
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      Claims</p>
+    <a class="app-nav-link" id="nav-active-claims" onclick="showScreen('active-claims')"><i data-lucide="activity"
+        class="icon-sm"></i> Active Claims</a>
+    <a class="app-nav-link" id="nav-claim-history" onclick="showScreen('claim-history')"><i data-lucide="clock"
+        class="icon-sm"></i> Claim History</a>
+    <a class="app-nav-link" id="nav-rejections" onclick="showScreen('rejections')" style="color:#fca5a5 !important;"><i
+        data-lucide="x-circle" class="icon-sm"></i> Rejections/Queries <span
+        style="margin-left:auto;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">3</span></a>
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      Finance</p>
+    <a class="app-nav-link" id="nav-settlements" onclick="showScreen('settlements')"><i data-lucide="indian-rupee"
+        class="icon-sm"></i> Settlements</a>
+    <p
+      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
+      System</p>
+    <a class="app-nav-link" id="nav-notifications" onclick="showScreen('notifications')"><i data-lucide="bell"
+        class="icon-sm"></i> Notifications</a>
+  </div>
+  <div
+    style="flex-shrink:0;padding:12px 0;border-top:1px solid rgba(255,255,255,0.05);background-color:rgba(0,0,0,0.1);">
+    <a class="app-nav-link" id="nav-settings" onclick="showScreen('settings')"><i data-lucide="settings"
+        class="icon-sm"></i> Settings</a>
+    <a class="app-nav-link" onclick="hpLogout()" style="color:#f87171 !important;"><i data-lucide="log-out"
+        class="icon-sm"></i> Logout</a>
+  </div>
+</div>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+
+      <!-- Topbar -->
+      <div class="app-topbar" style="padding:0 24px;display:flex;justify-content:space-between;align-items:center;">
+  <div>
+    <h2 style="font-size:15px;font-weight:700;margin:0;color:var(--text-main);" id="topbar-title">Dashboard</h2>
+    <p style="font-size:12px;color:var(--text-muted);margin:2px 0 0;" id="topbar-sub">Good morning — Here's your claims
+      workstation overview</p>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="btn btn-secondary btn-sm" onclick="showScreen('notifications')"
+      style="position:relative;padding:6px 12px;border-radius:8px;">
+      <i data-lucide="bell" class="icon-sm" style="margin-right:4px;"></i>
+      <span
+        style="position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid white;">5</span>
+    </button>
+    <div
+      style="width:36px;height:36px;border-radius:50%;background:var(--primary-600);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;"
+      id="sb-user-avatar">DS</div>
+  </div>
+</div>
+
+      <!-- Content Area -->
+      <div class="app-content" id="hp-content">
+
+        <div class="screen hp-screen active" id="screen-dashboard">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="home" class="icon-sm"></i> Dashboard</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Good morning — Here's your claims workstation overview</p>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" onclick="showScreen('pre-auth')">
+        <i data-lucide="shield" class="icon-sm"></i> New Pre-Auth
+      </button>
+      <button class="antd-btn" onclick="showScreen('document-upload')">
+        <i data-lucide="upload" class="icon-sm"></i> Upload Docs
+      </button>
+    </div>
+  </div>
+
+  <div class="antd-grid-4 antd-mb-6">
+    <div class="antd-card antd-flex antd-flex-col antd-justify-between">
+      <h3 class="antd-card-title" style="margin-top:0;margin-bottom:8px;">Active Admissions</h3>
+      <div class="antd-text-large">15</div>
+      <div class="antd-tag antd-tag-info" style="align-self:flex-start;margin-top:8px;">4 pending pre-auth</div>
+    </div>
+    <div class="antd-card antd-flex antd-flex-col antd-justify-between">
+      <h3 class="antd-card-title" style="margin-top:0;margin-bottom:8px;">Pending Queries</h3>
+      <div class="antd-text-large">3</div>
+      <div class="antd-tag antd-tag-error" style="align-self:flex-start;margin-top:8px;">Urgent action needed</div>
+    </div>
+    <div class="antd-card antd-flex antd-flex-col antd-justify-between">
+      <h3 class="antd-card-title" style="margin-top:0;margin-bottom:8px;">Settlements (MTD)</h3>
+      <div class="antd-text-large">₹4.2L</div>
+      <div class="antd-tag antd-tag-success" style="align-self:flex-start;margin-top:8px;">12 claims settled</div>
+    </div>
+    <div class="antd-card antd-flex antd-flex-col antd-justify-between">
+      <h3 class="antd-card-title" style="margin-top:0;margin-bottom:8px;">Avg. Approval Time</h3>
+      <div class="antd-text-large">4h 12m</div>
+      <div class="antd-tag antd-tag-success" style="align-self:flex-start;margin-top:8px;">↓ 18% vs last month</div>
+    </div>
+  </div>
+
+  <div class="antd-grid-2 antd-mb-6">
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Recent Pre-Authorizations</h3>
+      <table class="antd-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Insurer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="antd-text-strong">Rajiv Verma</span></td>
+            <td>Star Health</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Sneha Patil</span></td>
+            <td>HDFC ERGO</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Arun Kumar</span></td>
+            <td>ICICI Lombard</td>
+            <td style="font-weight:700;">₹2,10,000</td>
+            <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">AI Insights</h3>
+      <div class="antd-alert"
+        style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-bottom:12px;color:#1e40af;font-size:13px;">
+        <strong>💡 Tip:</strong> 3 pre-auth requests for cardiology procedures are pending. Average approval time for
+        Star Health is 4.2 hours.
+      </div>
+      <div class="antd-alert"
+        style="background:#fef3c7;border:1px solid #fde68a;border-radius:6px;padding:12px;margin-bottom:12px;color:#92400e;font-size:13px;">
+        <strong>⚠️ Alert:</strong> Policy expiry for HDFC ERGO patient (Sneha Patil) in 2 days. Initiate renewal
+        request.
+      </div>
+      <div class="antd-alert"
+        style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;color:#166534;font-size:13px;">
+        <strong>✅ Success:</strong> Settlement TAT improved by 18% this month. Keep up the good work!
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-patient-verification">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="user-check" class="icon-sm"></i> Patient
+        Verification</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Verify patient identity and insurance eligibility before
+        treatment</p>
+    </div>
+  </div>
+
+  <div class="antd-grid-2 antd-mb-6">
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Search Patient</h3>
+      <div class="antd-flex antd-gap-2 antd-mb-4">
+        <input type="text" class="antd-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
+        <button class="antd-btn antd-btn-primary"><i data-lucide="search" class="icon-sm"></i> Verify</button>
+      </div>
+      <div class="antd-alert"
+        style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;color:#166534;font-size:13px;">
+        <strong>Demo:</strong> Try MR number <code>99421-A</code> or mobile <code>9876543210</code>
+      </div>
+    </div>
+
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Quick Eligibility Check</h3>
+      <div class="antd-form-group">
+        <label class="antd-label">Insurance Company</label>
+        <select class="antd-input">
+          <option>Select Insurer</option>
+          <option>Star Health</option>
+          <option>HDFC ERGO</option>
+          <option>ICICI Lombard</option>
+          <option>Niva Bupa</option>
+        </select>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Policy Number</label>
+        <input type="text" class="antd-input" placeholder="e.g. MED-2394-A">
+      </div>
+      <button class="antd-btn antd-btn-primary" style="width:100%;"
+        onclick="showToastHP('Eligibility check initiated','success')">
+        <i data-lucide="shield-check" class="icon-sm"></i> Check Eligibility
+      </button>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Recent Verifications</h3>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Insurer</th>
+          <th>Policy</th>
+          <th>Status</th>
+          <th>Verified On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">99421-A</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td>MED-2394-A</td>
+          <td><span class="antd-tag antd-tag-success">Eligible</span></td>
+          <td>10 Jul 2026, 09:15</td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">88210-B</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td>HDFC-2947-1234</td>
+          <td><span class="antd-tag antd-tag-success">Eligible</span></td>
+          <td>10 Jul 2026, 08:42</td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">77102-C</span></td>
+          <td>Arun Kumar</td>
+          <td>ICICI Lombard</td>
+          <td>ICL-8812-X</td>
+          <td><span class="antd-tag antd-tag-error">Not Found</span></td>
+          <td>09 Jul 2026, 16:20</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-admission">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="home" class="icon-sm"></i> Admissions</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Insurance patients currently admitted — initiate pre-auth
+        before discharge</p>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New admission form opened','info')">
+      <i data-lucide="plus" class="icon-sm"></i> Register Admission
+    </button>
+  </div>
+
+  <div class="antd-grid-4 antd-mb-6">
+    <div class="antd-card" style="background:#fff7ed;border-color:#fed7aa;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#ea580c;">4</div>
+      <div class="antd-tag antd-tag-warning">Pre-Auth Pending</div>
+    </div>
+    <div class="antd-card" style="background:#f0fdf4;border-color:#bbf7d0;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#16a34a;">11</div>
+      <div class="antd-tag antd-tag-success">Pre-Auth Approved</div>
+    </div>
+    <div class="antd-card" style="background:#eff6ff;border-color:#bfdbfe;text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#2563eb;">3</div>
+      <div class="antd-tag antd-tag-info">Discharge Today</div>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-justify-between"
+      style="padding:16px 20px;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Current Inpatients (Insurance)</h3>
+      <div class="antd-flex antd-gap-2">
+        <input type="text" class="antd-input" placeholder="Search patient..." style="width:200px;margin:0;">
+        <select class="antd-input" style="width:130px;margin:0;">
+          <option>All Wards</option>
+          <option>Cardiology</option>
+          <option>Orthopaedics</option>
+          <option>Surgery</option>
+        </select>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="antd-table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Ward / Doctor</th>
+            <th>Insurer / Policy</th>
+            <th>Admitted</th>
+            <th>Est. Discharge</th>
+            <th>Est. Cost</th>
+            <th>Pre-Auth Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="antd-text-strong">Rajiv Verma</span><br><span class="antd-text-tertiary">MR: 99421-A • Age
+                52</span></td>
+            <td>Cardiology<br><span class="antd-text-tertiary">Dr. Mehta</span></td>
+            <td>Star Health<br><span class="antd-text-tertiary">MED-2394-A</span></td>
+            <td>08 Jul</td>
+            <td>12 Jul</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td><span class="antd-tag antd-tag-warning">Pending</span></td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('pre-auth')">Initiate</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Sneha Patil</span><br><span class="antd-text-tertiary">MR: 88210-B • Age
+                34</span></td>
+            <td>Orthopaedics<br><span class="antd-text-tertiary">Dr. Verma</span></td>
+            <td>HDFC ERGO<br><span class="antd-text-tertiary">HDFC-2947-1234</span></td>
+            <td>09 Jul</td>
+            <td>14 Jul</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+            <td><button class="antd-btn antd-btn-primary">Fast-Track</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Arun Kumar</span><br><span class="antd-text-tertiary">MR: 77102-C • Age
+                45</span></td>
+            <td>General Surgery<br><span class="antd-text-tertiary">Dr. Rao</span></td>
+            <td>ICICI Lombard<br><span class="antd-text-tertiary">ICL-8812-X</span></td>
+            <td>10 Jul</td>
+            <td>13 Jul</td>
+            <td style="font-weight:700;">₹2,10,000</td>
+            <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Priya Mehta</span><br><span class="antd-text-tertiary">MR: 65432-D • Age
+                29</span></td>
+            <td>Gynaecology<br><span class="antd-text-tertiary">Dr. Sharma</span></td>
+            <td>Bajaj Allianz<br><span class="antd-text-tertiary">BAJ-5521-Z</span></td>
+            <td>09 Jul</td>
+            <td>10 Jul</td>
+            <td style="font-weight:700;">₹55,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td><button class="antd-btn">Final Bill</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">Suresh Iyer</span><br><span class="antd-text-tertiary">MR: 54321-E • Age
+                67</span></td>
+            <td>Ophthalmology<br><span class="antd-text-tertiary">Dr. Pillai</span></td>
+            <td>New India<br><span class="antd-text-tertiary">NIA-3302-B</span></td>
+            <td>10 Jul</td>
+            <td>11 Jul</td>
+            <td style="font-weight:700;">₹28,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td><button class="antd-btn">Final Bill</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-pre-auth">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Submit and track pre-authorization requests</p>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New pre-auth form opened','info')">
+      <i data-lucide="plus" class="icon-sm"></i> New Pre-Auth
+    </button>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-justify-between"
+      style="padding:16px 20px;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Active Pre-Auth Requests</h3>
+      <div class="antd-flex antd-gap-2">
+        <input type="text" class="antd-input" placeholder="Search..." style="width:180px;margin:0;">
+        <select class="antd-input" style="width:130px;margin:0;">
+          <option>All Status</option>
+          <option>Pending</option>
+          <option>Approved</option>
+          <option>Query</option>
+        </select>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="antd-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Patient</th>
+            <th>Procedure</th>
+            <th>Insurer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Submitted</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0142</span></td>
+            <td>Rajiv Verma</td>
+            <td>Laparoscopic Cholecystectomy</td>
+            <td>Star Health</td>
+            <td style="font-weight:700;">₹1,45,000</td>
+            <td><span class="antd-tag antd-tag-success">Approved</span></td>
+            <td>09 Jul 2026</td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0141</span></td>
+            <td>Sneha Patil</td>
+            <td>Total Knee Replacement</td>
+            <td>HDFC ERGO</td>
+            <td style="font-weight:700;">₹85,000</td>
+            <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0140</span></td>
+            <td>Arun Kumar</td>
+            <td>Laparoscopic Hernia Repair</td>
+            <td>ICICI Lombard</td>
+            <td style="font-weight:700;">₹65,000</td>
+            <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn antd-btn-primary" onclick="showScreen('rejections')">Reply</button></td>
+          </tr>
+          <tr>
+            <td><span class="antd-text-strong">PA-2026-0139</span></td>
+            <td>Priya Mehta</td>
+            <td>Laparoscopic Hysterectomy</td>
+            <td>Bajaj Allianz</td>
+            <td style="font-weight:700;">₹55,000</td>
+            <td><span class="antd-tag antd-tag-warning">Pending</span></td>
+            <td>10 Jul 2026</td>
+            <td><button class="antd-btn">Track</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-document-upload">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="upload" class="icon-sm"></i> Document Upload &
+        Processing</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Upload and process hospital bills, discharge summaries, and
+        reports</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-mb-6">
+    <h3 class="antd-card-title antd-mb-4">Upload Documents</h3>
+    <div class="antd-card"
+      style="border:2px dashed var(--antd-border);border-radius:8px;padding:40px;text-align:center;background:#fafafa;cursor:pointer;"
+      onclick="showToastHP('File browser opened','info')">
+      <i data-lucide="upload-cloud" style="width:48px;height:48px;color:var(--antd-primary);margin-bottom:12px;"></i>
+      <p class="antd-text-strong" style="margin:0 0 4px;">Drop files here or click to browse</p>
+      <p class="antd-text-secondary" style="margin:0;font-size:12px;">Supports PDF, JPG, PNG up to 10MB</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-p-4"
+      style="background:#f9fafb;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Recent Uploads</h3>
+    </div>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Patient</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Uploaded</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">discharge_summary_rajiv.pdf</span></td>
+          <td>Rajiv Verma</td>
+          <td><span class="antd-tag">Discharge Summary</span></td>
+          <td>2.4 MB</td>
+          <td>10 Jul 2026, 14:30</td>
+          <td><span class="antd-tag antd-tag-success">Processed</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">hospital_bill_sneha.pdf</span></td>
+          <td>Sneha Patil</td>
+          <td><span class="antd-tag">Itemized Bill</span></td>
+          <td>5.1 MB</td>
+          <td>10 Jul 2026, 11:20</td>
+          <td><span class="antd-tag antd-tag-info">Processing</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">prescription_arun.pdf</span></td>
+          <td>Arun Kumar</td>
+          <td><span class="antd-tag">Prescription</span></td>
+          <td>1.2 MB</td>
+          <td>09 Jul 2026, 16:45</td>
+          <td><span class="antd-tag antd-tag-success">Processed</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-ai-optimizer">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="zap" class="icon-sm"></i> AI Description Fix</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Auto-fix procedure descriptions to match insurer policy
+        wording</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-mb-6">
+    <h3 class="antd-card-title antd-mb-4">Input / Output</h3>
+    <div class="antd-grid-2 antd-mb-4">
+      <div>
+        <label class="antd-label">Hospital Description</label>
+        <textarea class="antd-input" rows="6"
+          placeholder="Paste procedure description from hospital notes...">Laproscopic cholecystectomy with CBD exploration under GA with intraoperative cholangiogram.</textarea>
+      </div>
+      <div>
+        <label class="antd-label">AI Suggested Description</label>
+        <textarea class="antd-input" rows="6" style="background:#f9fafb;"
+          readonly>Laparoscopic cholecystectomy with common bile duct (CBD) exploration under general anesthesia (GA) with intraoperative cholangiogram (IOC).</textarea>
+      </div>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" onclick="showToastHP('Description optimized by AI','success')">
+        <i data-lucide="zap" class="icon-sm"></i> Optimize Description
+      </button>
+      <button class="antd-btn" onclick="showToastHP('Copied to clipboard','info')">
+        <i data-lucide="copy" class="icon-sm"></i> Copy Output
+      </button>
+      <button class="antd-btn" onclick="showToastHP('Saved to patient records','success')">
+        <i data-lucide="save" class="icon-sm"></i> Save to Records
+      </button>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Recent Optimizations</h3>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Original</th>
+          <th>Optimized</th>
+          <th>Insurer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">Rajiv Verma</span></td>
+          <td>Laproscopic cholecystectomy...</td>
+          <td>Laparoscopic cholecystectomy...</td>
+          <td>Star Health</td>
+          <td><span class="antd-tag antd-tag-success">Applied</span></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">Sneha Patil</span></td>
+          <td>Knee replacement surgery...</td>
+          <td>Total knee arthroplasty...</td>
+          <td>HDFC ERGO</td>
+          <td><span class="antd-tag antd-tag-success">Applied</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-active-claims">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <h2 class="antd-text-large" style="margin: 0;"><i data-lucide="activity" class="icon-sm"></i> Active Hospital Claims
+    </h2>
+    <div class="antd-flex antd-gap-2">
+      <input type="text" class="antd-input" placeholder="Search Patient or MR No..." style="width: 250px; margin: 0;">
+      <button class="antd-btn"><i data-lucide="filter" class="icon-sm"></i> Filter</button>
+      <button class="antd-btn antd-btn-primary"><i data-lucide="download" class="icon-sm"></i> Export CSV</button>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0" style="overflow-x: auto;">
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient ID (MR)</th>
+          <th>Patient Name</th>
+          <th>Insurance Company</th>
+          <th>Claim Type</th>
+          <th>Amount (₹)</th>
+          <th>Status</th>
+          <th>Last Updated</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">99421-A</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹1,45,000</td>
+          <td><span class="antd-tag antd-tag-success">Approved</span></td>
+          <td>10 mins ago</td>
+          <td><button class="antd-btn">View Docs</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">88210-B</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
+          <td>₹85,000</td>
+          <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+          <td>1 hr ago</td>
+          <td><button class="antd-btn">View Docs</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">77102-C</span></td>
+          <td>Arun Kumar</td>
+          <td>ICICI Lombard</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹2,10,000</td>
+          <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+          <td>3 hrs ago</td>
+          <td><button class="antd-btn antd-btn-primary">Reply to Query</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">66005-D</span></td>
+          <td>Priya Sharma</td>
+          <td>Niva Bupa</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
+          <td>₹42,500</td>
+          <td><span class="antd-tag antd-tag-success">Settled</span></td>
+          <td>1 day ago</td>
+          <td><button class="antd-btn">View UTR</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">55990-E</span></td>
+          <td>Vikram Singh</td>
+          <td>Reliance General</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹3,50,000</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg); color: var(--antd-text-secondary);">Draft</span>
+          </td>
+          <td>2 days ago</td>
+          <td><button class="antd-btn">Resume</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-claim-history">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="clock" class="icon-sm"></i> Claim History</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Complete history of all claims submitted by this hospital
+      </p>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <input type="text" class="antd-input" placeholder="Search claims..." style="width:200px;margin:0;">
+      <button class="antd-btn"><i data-lucide="download" class="icon-sm"></i> Export</button>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Claim ID</th>
+          <th>Patient</th>
+          <th>Insurer</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Submitted</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">CLM-2026-0045</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td><span class="antd-tag">Cashless</span></td>
+          <td style="font-weight:700;">₹1,45,000</td>
+          <td><span class="antd-tag antd-tag-success">Approved</span></td>
+          <td>02 Jul 2026</td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">CLM-2026-0044</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td><span class="antd-tag">Reimbursement</span></td>
+          <td style="font-weight:700;">₹85,000</td>
+          <td><span class="antd-tag antd-tag-warning">Pending</span></td>
+          <td>28 Jun 2026</td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">CLM-2026-0043</span></td>
+          <td>Arun Kumar</td>
+          <td>ICICI Lombard</td>
+          <td><span class="antd-tag">Cashless</span></td>
+          <td style="font-weight:700;">₹2,10,000</td>
+          <td><span class="antd-tag antd-tag-error">Rejected</span></td>
+          <td>15 Jun 2026</td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">CLM-2026-0042</span></td>
+          <td>Priya Sharma</td>
+          <td>Niva Bupa</td>
+          <td><span class="antd-tag">Cashless</span></td>
+          <td style="font-weight:700;">₹42,500</td>
+          <td><span class="antd-tag antd-tag-success">Settled</span></td>
+          <td>10 Jun 2026</td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-rejections">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="x-circle" class="icon-sm"></i> Rejections / Queries
+      </h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Claims and pre-auth requests with queries from insurers</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-p-4"
+      style="background:#fef2f2;border-bottom:1px solid var(--antd-border);">
+      <i data-lucide="alert-circle" class="icon-sm" style="color:#ef4444;margin-right:8px;"></i>
+      <span class="antd-text-strong">3 items require your attention</span>
+    </div>
+
+    <div class="antd-card antd-mb-4" style="border-left:4px solid #ef4444;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Query: Additional Documentation Required</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">ICICI Lombard • Pre-Auth • CLM-2026-0048
+          </p>
+        </div>
+        <span class="antd-tag antd-tag-error">Urgent</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:12px;margin-bottom:12px;color:#991b1b;font-size:13px;">
+        <strong>Insurer Query:</strong> Please provide discharge summary and itemized hospital bill for patient Arun
+        Kumar.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showScreen('document-upload')">
+          <i data-lucide="upload" class="icon-sm"></i> Upload Documents
+        </button>
+        <button class="antd-btn"><i data-lucide="message-circle" class="icon-sm"></i> Reply to Query</button>
+      </div>
+    </div>
+
+    <div class="antd-card antd-mb-4" style="border-left:4px solid #f59e0b;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Pre-Auth Amount Mismatch</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">Star Health • Pre-Auth • CLM-2026-0045
+          </p>
+        </div>
+        <span class="antd-tag antd-tag-warning">Review</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:12px;margin-bottom:12px;color:#92400e;font-size:13px;">
+        <strong>Insurer Query:</strong> Hospital quoted ₹1,45,000 but policy limit for this procedure is ₹1,20,000.
+        Please revise.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showScreen('pre-auth')">
+          <i data-lucide="edit" class="icon-sm"></i> Revise Amount
+        </button>
+        <button class="antd-btn"><i data-lucide="message-circle" class="icon-sm"></i> Reply</button>
+      </div>
+    </div>
+
+    <div class="antd-card" style="border-left:4px solid #3b82f6;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Policy Expiry - Renewal Required</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">HDFC ERGO • Claim • CLM-2026-0044</p>
+        </div>
+        <span class="antd-tag antd-tag-info">Info</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-bottom:12px;color:#1e40af;font-size:13px;">
+        <strong>Insurer Note:</strong> Patient policy expired on 05 Jul 2026. Claim cannot be processed until policy is
+        renewed.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showToastHP('Renewal request sent to patient','success')">
+          <i data-lucide="send" class="icon-sm"></i> Notify Patient
+        </button>
+        <button class="antd-btn"><i data-lucide="phone" class="icon-sm"></i> Contact Insurer</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-settlements">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="indian-rupee" class="icon-sm"></i> Settlements</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Track payment settlements from insurers</p>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <select class="antd-input" style="width:150px;margin:0;">
+        <option>All Insurers</option>
+        <option>Star Health</option>
+        <option>HDFC ERGO</option>
+        <option>ICICI Lombard</option>
+      </select>
+      <button class="antd-btn"><i data-lucide="download" class="icon-sm"></i> Export</button>
+    </div>
+  </div>
+
+  <div class="antd-grid-4 antd-mb-6">
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#16a34a;">₹4.2L</div>
+      <div class="antd-tag antd-tag-success">Settled This Month</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#f59e0b;">₹1.8L</div>
+      <div class="antd-tag antd-tag-warning">Processing</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#2563eb;">12</div>
+      <div class="antd-tag antd-tag-info">Pending</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#6b7280;">2.5 days</div>
+      <div class="antd-tag">Avg. TAT</div>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>UTR / Ref No.</th>
+          <th>Patient</th>
+          <th>Insurer</th>
+          <th>Claim ID</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Settled On</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456123</span></td>
+          <td>Priya Sharma</td>
+          <td>Niva Bupa</td>
+          <td>CLM-2026-0042</td>
+          <td style="font-weight:700;">₹42,500</td>
+          <td><span class="antd-tag antd-tag-success">Settled</span></td>
+          <td>10 Jul 2026</td>
+          <td><button class="antd-btn">Download</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456124</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td>CLM-2026-0045</td>
+          <td style="font-weight:700;">₹1,45,000</td>
+          <td><span class="antd-tag antd-tag-warning">Processing</span></td>
+          <td>—</td>
+          <td><button class="antd-btn">Track</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456125</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td>CLM-2026-0044</td>
+          <td style="font-weight:700;">₹85,000</td>
+          <td><span class="antd-tag antd-tag-info">Initiated</span></td>
+          <td>—</td>
+          <td><button class="antd-btn">Track</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-notifications">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <h2 class="antd-text-large" style="margin:0;"><i data-lucide="bell" class="icon-sm"></i> Notifications</h2>
+    <button class="antd-btn" onclick="showToastHP('All notifications marked as read','success')">
+      <i data-lucide="check-check" class="icon-sm"></i> Mark All Read
+    </button>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-p-4"
+      style="background:#f9fafb;border-bottom:1px solid var(--antd-border);">
+      <div class="antd-flex antd-items-center antd-gap-2">
+        <input type="checkbox" checked style="accent-color: var(--antd-primary);">
+        <span class="antd-text-strong">Unread Only</span>
+      </div>
+      <div class="antd-flex antd-gap-2" style="margin-left:auto;">
+        <select class="antd-input" style="width:150px;margin:0;">
+          <option>All Types</option>
+          <option>Pre-Auth</option>
+          <option>Claims</option>
+          <option>Settlements</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="antd-flex antd-items-start antd-gap-4 antd-p-4"
+      style="border-bottom:1px solid var(--antd-border);background:#eff6ff;">
+      <div
+        style="width:40px;height:40px;border-radius:50%;background:var(--antd-primary);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i data-lucide="shield" style="width:20px;height:20px;"></i>
+      </div>
+      <div style="flex:1;">
+        <div class="antd-flex antd-items-center antd-gap-2 antd-mb-2">
+          <span class="antd-text-strong">Pre-Auth Approved</span>
+          <span class="antd-tag antd-tag-success">New</span>
+        </div>
+        <p class="antd-text-secondary" style="margin:0 0 4px;">Pre-authorization for Rajiv Verma (MR: 99421-A) has been
+          approved by Star Health. Amount: ₹1,45,000</p>
+        <span class="antd-text-tertiary" style="font-size:12px;">2 minutes ago</span>
+      </div>
+      <button class="antd-btn" style="flex-shrink:0;">View</button>
+    </div>
+
+    <div class="antd-flex antd-items-start antd-gap-4 antd-p-4"
+      style="border-bottom:1px solid var(--antd-border);background:#fef2f2;">
+      <div
+        style="width:40px;height:40px;border-radius:50%;background:#ef4444;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i data-lucide="alert-circle" style="width:20px;height:20px;"></i>
+      </div>
+      <div style="flex:1;">
+        <div class="antd-flex antd-items-center antd-gap-2 antd-mb-2">
+          <span class="antd-text-strong">Query Raised - Arun Kumar</span>
+          <span class="antd-tag antd-tag-error">Urgent</span>
+        </div>
+        <p class="antd-text-secondary" style="margin:0 0 4px;">ICICI Lombard has raised a query for additional
+          documents. Please upload within 24 hours.</p>
+        <span class="antd-text-tertiary" style="font-size:12px;">1 hour ago</span>
+      </div>
+      <button class="antd-btn antd-btn-primary" style="flex-shrink:0;" onclick="showScreen('rejections')">Reply</button>
+    </div>
+
+    <div class="antd-flex antd-items-start antd-gap-4 antd-p-4" style="border-bottom:1px solid var(--antd-border);">
+      <div
+        style="width:40px;height:40px;border-radius:50%;background:#10b981;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i data-lucide="check-circle" style="width:20px;height:20px;"></i>
+      </div>
+      <div style="flex:1;">
+        <div class="antd-flex antd-items-center antd-gap-2 antd-mb-2">
+          <span class="antd-text-strong">Settlement Processed</span>
+        </div>
+        <p class="antd-text-secondary" style="margin:0 0 4px;">Settlement of ₹42,500 for Priya Sharma (Niva Bupa) has
+          been processed. UTR: UTR789456123</p>
+        <span class="antd-text-tertiary" style="font-size:12px;">3 hours ago</span>
+      </div>
+      <button class="antd-btn" style="flex-shrink:0;">View UTR</button>
+    </div>
+
+    <div class="antd-flex antd-items-start antd-gap-4 antd-p-4">
+      <div
+        style="width:40px;height:40px;border-radius:50%;background:#f59e0b;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i data-lucide="info" style="width:20px;height:20px;"></i>
+      </div>
+      <div style="flex:1;">
+        <div class="antd-flex antd-items-center antd-gap-2 antd-mb-2">
+          <span class="antd-text-strong">System Maintenance</span>
+        </div>
+        <p class="antd-text-secondary" style="margin:0 0 4px;">Scheduled maintenance on 15 Jul 2026, 02:00 AM - 04:00
+          AM. Some features may be unavailable.</p>
+        <span class="antd-text-tertiary" style="font-size:12px;">1 day ago</span>
+      </div>
+      <button class="antd-btn" style="flex-shrink:0;">Dismiss</button>
+    </div>
+  </div>
+</div>
+        <div class="screen hp-screen" id="screen-settings">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <h2 class="antd-text-large" style="margin:0;"><i data-lucide="settings" class="icon-sm"></i> Settings</h2>
+  </div>
+
+  <div class="antd-grid-2 antd-mb-6">
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Hospital Profile</h3>
+      <div class="antd-form-group">
+        <label class="antd-label">Hospital Name</label>
+        <input type="text" class="antd-input" value="Medanta - The Medicity, Gurugram">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Hospital ID</label>
+        <input type="text" class="antd-input" value="HOSP-MED-001" disabled>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">TPA Desk Email</label>
+        <input type="email" class="antd-input" value="tpa.desk@medanta.com">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Contact Number</label>
+        <input type="tel" class="antd-input" value="+91 124 491 2345">
+      </div>
+      <button class="antd-btn antd-btn-primary" onclick="showToastHP('Profile updated successfully','success')">
+        <i data-lucide="save" class="icon-sm"></i> Save Changes
+      </button>
+    </div>
+
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Notifications</h3>
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4"
+        style="padding:12px 0;border-bottom:1px solid var(--antd-border);">
+        <div>
+          <div class="antd-text-strong">Email Notifications</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Receive pre-auth and claim updates via email</div>
+        </div>
+        <input type="checkbox" checked style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4"
+        style="padding:12px 0;border-bottom:1px solid var(--antd-border);">
+        <div>
+          <div class="antd-text-strong">SMS Alerts</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Get urgent alerts on mobile</div>
+        </div>
+        <input type="checkbox" checked style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+      <div class="antd-flex antd-items-center antd-justify-between" style="padding:12px 0;">
+        <div>
+          <div class="antd-text-strong">Browser Notifications</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Show desktop notifications</div>
+        </div>
+        <input type="checkbox" style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Security</h3>
+    <div class="antd-grid-2">
+      <div class="antd-form-group">
+        <label class="antd-label">Current Password</label>
+        <input type="password" class="antd-input" placeholder="Enter current password">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">New Password</label>
+        <input type="password" class="antd-input" placeholder="Enter new password">
+      </div>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('Password updated successfully','success')">
+      <i data-lucide="lock" class="icon-sm"></i> Update Password
+    </button>
+  </div>
+</div>
+
+      </div><!-- /app-content -->
+    </div><!-- /app-main -->
+  </div><!-- /app-container -->
+
+  <!-- Toast container -->
+  <div id="hp-toast-container" class="toast-container"></div>
+
+  <!-- Main JS -->
+  <script src="assets/js/main.js?v=2"></script>
+
+</body>
+
+</html>

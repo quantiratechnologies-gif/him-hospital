@@ -1,0 +1,82 @@
+<div class="screen hp-screen" id="screen-rejections">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="x-circle" class="icon-sm"></i> Rejections / Queries
+      </h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Claims and pre-auth requests with queries from insurers</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-p-4"
+      style="background:#fef2f2;border-bottom:1px solid var(--antd-border);">
+      <i data-lucide="alert-circle" class="icon-sm" style="color:#ef4444;margin-right:8px;"></i>
+      <span class="antd-text-strong">3 items require your attention</span>
+    </div>
+
+    <div class="antd-card antd-mb-4" style="border-left:4px solid #ef4444;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Query: Additional Documentation Required</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">ICICI Lombard • Pre-Auth • CLM-2026-0048
+          </p>
+        </div>
+        <span class="antd-tag antd-tag-error">Urgent</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:12px;margin-bottom:12px;color:#991b1b;font-size:13px;">
+        <strong>Insurer Query:</strong> Please provide discharge summary and itemized hospital bill for patient Arun
+        Kumar.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showScreen('document-upload')">
+          <i data-lucide="upload" class="icon-sm"></i> Upload Documents
+        </button>
+        <button class="antd-btn"><i data-lucide="message-circle" class="icon-sm"></i> Reply to Query</button>
+      </div>
+    </div>
+
+    <div class="antd-card antd-mb-4" style="border-left:4px solid #f59e0b;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Pre-Auth Amount Mismatch</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">Star Health • Pre-Auth • CLM-2026-0045
+          </p>
+        </div>
+        <span class="antd-tag antd-tag-warning">Review</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:12px;margin-bottom:12px;color:#92400e;font-size:13px;">
+        <strong>Insurer Query:</strong> Hospital quoted ₹1,45,000 but policy limit for this procedure is ₹1,20,000.
+        Please revise.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showScreen('pre-auth')">
+          <i data-lucide="edit" class="icon-sm"></i> Revise Amount
+        </button>
+        <button class="antd-btn"><i data-lucide="message-circle" class="icon-sm"></i> Reply</button>
+      </div>
+    </div>
+
+    <div class="antd-card" style="border-left:4px solid #3b82f6;">
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4">
+        <div>
+          <h3 class="antd-card-title" style="margin:0;">Policy Expiry - Renewal Required</h3>
+          <p class="antd-text-secondary" style="margin:2px 0 0;font-size:12px;">HDFC ERGO • Claim • CLM-2026-0044</p>
+        </div>
+        <span class="antd-tag antd-tag-info">Info</span>
+      </div>
+      <div class="antd-alert"
+        style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-bottom:12px;color:#1e40af;font-size:13px;">
+        <strong>Insurer Note:</strong> Patient policy expired on 05 Jul 2026. Claim cannot be processed until policy is
+        renewed.
+      </div>
+      <div class="antd-flex antd-gap-2">
+        <button class="antd-btn antd-btn-primary" onclick="showToastHP('Renewal request sent to patient','success')">
+          <i data-lucide="send" class="icon-sm"></i> Notify Patient
+        </button>
+        <button class="antd-btn"><i data-lucide="phone" class="icon-sm"></i> Contact Insurer</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="screen hp-screen" id="screen-settings">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <h2 class="antd-text-large" style="margin:0;"><i data-lucide="settings" class="icon-sm"></i> Settings</h2>
+  </div>
+
+  <div class="antd-grid-2 antd-mb-6">
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Hospital Profile</h3>
+      <div class="antd-form-group">
+        <label class="antd-label">Hospital Name</label>
+        <input type="text" class="antd-input" value="Medanta - The Medicity, Gurugram">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Hospital ID</label>
+        <input type="text" class="antd-input" value="HOSP-MED-001" disabled>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">TPA Desk Email</label>
+        <input type="email" class="antd-input" value="tpa.desk@medanta.com">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Contact Number</label>
+        <input type="tel" class="antd-input" value="+91 124 491 2345">
+      </div>
+      <button class="antd-btn antd-btn-primary" onclick="showToastHP('Profile updated successfully','success')">
+        <i data-lucide="save" class="icon-sm"></i> Save Changes
+      </button>
+    </div>
+
+    <div class="antd-card">
+      <h3 class="antd-card-title antd-mb-4">Notifications</h3>
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4"
+        style="padding:12px 0;border-bottom:1px solid var(--antd-border);">
+        <div>
+          <div class="antd-text-strong">Email Notifications</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Receive pre-auth and claim updates via email</div>
+        </div>
+        <input type="checkbox" checked style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+      <div class="antd-flex antd-items-center antd-justify-between antd-mb-4"
+        style="padding:12px 0;border-bottom:1px solid var(--antd-border);">
+        <div>
+          <div class="antd-text-strong">SMS Alerts</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Get urgent alerts on mobile</div>
+        </div>
+        <input type="checkbox" checked style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+      <div class="antd-flex antd-items-center antd-justify-between" style="padding:12px 0;">
+        <div>
+          <div class="antd-text-strong">Browser Notifications</div>
+          <div class="antd-text-secondary" style="font-size:12px;">Show desktop notifications</div>
+        </div>
+        <input type="checkbox" style="accent-color: var(--antd-primary);width:18px;height:18px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Security</h3>
+    <div class="antd-grid-2">
+      <div class="antd-form-group">
+        <label class="antd-label">Current Password</label>
+        <input type="password" class="antd-input" placeholder="Enter current password">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">New Password</label>
+        <input type="password" class="antd-input" placeholder="Enter new password">
+      </div>
+    </div>
+    <button class="antd-btn antd-btn-primary" onclick="showToastHP('Password updated successfully','success')">
+      <i data-lucide="lock" class="icon-sm"></i> Update Password
+    </button>
+  </div>
+</div>

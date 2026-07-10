@@ -1,0 +1,70 @@
+<div class="screen hp-screen" id="screen-document-upload">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="upload" class="icon-sm"></i> Document Upload &
+        Processing</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Upload and process hospital bills, discharge summaries, and
+        reports</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-mb-6">
+    <h3 class="antd-card-title antd-mb-4">Upload Documents</h3>
+    <div class="antd-card"
+      style="border:2px dashed var(--antd-border);border-radius:8px;padding:40px;text-align:center;background:#fafafa;cursor:pointer;"
+      onclick="showToastHP('File browser opened','info')">
+      <i data-lucide="upload-cloud" style="width:48px;height:48px;color:var(--antd-primary);margin-bottom:12px;"></i>
+      <p class="antd-text-strong" style="margin:0 0 4px;">Drop files here or click to browse</p>
+      <p class="antd-text-secondary" style="margin:0;font-size:12px;">Supports PDF, JPG, PNG up to 10MB</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <div class="antd-flex antd-items-center antd-p-4"
+      style="background:#f9fafb;border-bottom:1px solid var(--antd-border);">
+      <h3 class="antd-card-title" style="margin:0;">Recent Uploads</h3>
+    </div>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Patient</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Uploaded</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">discharge_summary_rajiv.pdf</span></td>
+          <td>Rajiv Verma</td>
+          <td><span class="antd-tag">Discharge Summary</span></td>
+          <td>2.4 MB</td>
+          <td>10 Jul 2026, 14:30</td>
+          <td><span class="antd-tag antd-tag-success">Processed</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">hospital_bill_sneha.pdf</span></td>
+          <td>Sneha Patil</td>
+          <td><span class="antd-tag">Itemized Bill</span></td>
+          <td>5.1 MB</td>
+          <td>10 Jul 2026, 11:20</td>
+          <td><span class="antd-tag antd-tag-info">Processing</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">prescription_arun.pdf</span></td>
+          <td>Arun Kumar</td>
+          <td><span class="antd-tag">Prescription</span></td>
+          <td>1.2 MB</td>
+          <td>09 Jul 2026, 16:45</td>
+          <td><span class="antd-tag antd-tag-success">Processed</span></td>
+          <td><button class="antd-btn">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
