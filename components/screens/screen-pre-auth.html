@@ -1,19 +1,35 @@
 <div class="screen hp-screen" id="screen-pre-auth">
   <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
     <div>
-      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization</h2>
-      <p class="antd-text-secondary" style="margin:2px 0 0;">Submit and track pre-authorization requests</p>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization & New Claims</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Submit cashless pre-authorization requests and new hospital claims</p>
     </div>
-    <button class="antd-btn antd-btn-primary" onclick="togglePreAuthForm(true)">
-      <i data-lucide="plus" class="icon-sm"></i> New Pre-Auth
-    </button>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" onclick="openSubmissionWizard('preauth')">
+        <i data-lucide="shield-check" class="icon-sm"></i> Cashless Pre-Auth
+      </button>
+      <button class="antd-btn" style="background:#16a34a;color:white;border-color:#16a34a;" onclick="openSubmissionWizard('claim')">
+        <i data-lucide="file-plus" class="icon-sm"></i> Submit New Claim
+      </button>
+    </div>
   </div>
 
-  <!-- Pre-Auth Form Card (Hidden by default) -->
+  <!-- Pre-Auth / New Claim Form Card (Hidden by default) -->
   <div class="antd-card antd-mb-6" id="pre-auth-form-card" style="display:none; border:1px solid #bfdbfe; background:#f0f7ff; border-radius:8px; padding:20px;">
     <div class="antd-flex antd-items-center antd-justify-between antd-mb-4" style="border-bottom:1px solid #bfdbfe; padding-bottom:12px;">
-      <h3 class="antd-card-title" style="margin:0; color:#1e40af;"><i data-lucide="file-plus" class="icon-sm"></i> Submit New Pre-Authorization</h3>
+      <h3 class="antd-card-title" style="margin:0; color:#1e40af;" id="submission-wizard-title"><i data-lucide="file-plus" class="icon-sm"></i> Submit Cashless Pre-Authorization</h3>
       <button class="antd-btn antd-btn-sm" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)"><i data-lucide="x" class="icon-sm"></i> Close</button>
+    </div>
+
+    <!-- Mode Selector Bar -->
+    <div class="antd-flex antd-items-center antd-gap-4 antd-mb-4" style="background:rgba(255,255,255,0.85);padding:10px 14px;border-radius:8px;border:1px solid #cbd5e1;">
+      <span style="font-size:13px;font-weight:700;color:#334155;">Submission Type:</span>
+      <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#1e40af;">
+        <input type="radio" name="sub-type" id="sub-type-preauth" value="preauth" checked onchange="switchSubmissionMode('preauth')"> Cashless Normal Pre-Auth
+      </label>
+      <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#166534;">
+        <input type="radio" name="sub-type" id="sub-type-claim" value="claim" onchange="switchSubmissionMode('claim')"> New Final Claim / Settlement
+      </label>
     </div>
     
     <!-- ICU / Incapacitated Patient Bypass Option -->
@@ -55,7 +71,7 @@
       </div>
     </div>
 
-    <div class="antd-grid-3 antd-mb-4" style="gap:16px; margin-bottom:20px;">
+    <div class="antd-grid-3 antd-mb-4" style="gap:16px; margin-bottom:16px;">
       <div class="antd-form-group">
         <label class="antd-label">Diagnosis / ICD-10 Category</label>
         <select class="antd-input" id="pre-auth-form-diagnosis" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
@@ -69,17 +85,37 @@
         </select>
       </div>
       <div class="antd-form-group">
-        <label class="antd-label">Proposed Procedure</label>
+        <label class="antd-label" id="label-form-procedure">Proposed Procedure</label>
         <input type="text" class="antd-input" id="pre-auth-form-procedure" placeholder="e.g. Laparoscopic Cholecystectomy" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
       </div>
       <div class="antd-form-group">
-        <label class="antd-label">Estimated Bill Amount (₹)</label>
+        <label class="antd-label" id="label-form-amount">Estimated Bill Amount (₹)</label>
         <input type="number" class="antd-input" id="pre-auth-form-amount" placeholder="e.g. 145000" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
       </div>
     </div>
 
+    <!-- Extra Claim Details Row (Shown only when New Claim is selected) -->
+    <div id="claim-extra-fields" style="display:none; background:rgba(255,255,255,0.7); padding:14px; border-radius:8px; border:1px solid #bbf7d0; margin-bottom:16px;">
+      <div class="antd-grid-3" style="gap:16px;">
+        <div class="antd-form-group">
+          <label class="antd-label">Discharge Date</label>
+          <input type="date" class="antd-input" id="claim-form-date" value="2026-07-10" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+        <div class="antd-form-group">
+          <label class="antd-label">Final Invoice Number</label>
+          <input type="text" class="antd-input" id="claim-form-invoice" placeholder="INV-2026-8841" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+        <div class="antd-form-group">
+          <label class="antd-label">Attached Documents</label>
+          <div style="font-size:12px; color:#166534; font-weight:600; padding-top:6px;">
+            ✅ Final Bill &nbsp; ✅ Discharge Summary
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="antd-flex antd-gap-2">
-      <button class="antd-btn antd-btn-primary" style="background:#2563eb; border-color:#2563eb;" onclick="submitPreAuthForm()">
+      <button class="antd-btn antd-btn-primary" id="wizard-submit-btn" style="background:#2563eb; border-color:#2563eb;" onclick="submitSubmissionWizard()">
         <i data-lucide="send" class="icon-sm"></i> Submit Pre-Authorization to TPA
       </button>
       <button class="antd-btn" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)">Cancel</button>

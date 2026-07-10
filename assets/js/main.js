@@ -238,15 +238,13 @@ function initiatePreAuthFromVerification() {
   showToastHP('Pre-authorization form pre-filled with patient details', 'info');
 }
 
-function togglePreAuthForm(show) {
+function openSubmissionWizard(mode = 'preauth') {
+  showScreen('pre-auth');
   const formCard = document.getElementById('pre-auth-form-card');
-  if (!formCard) return;
-
-  if (show) {
+  if (formCard) {
     formCard.style.display = 'block';
     formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    // Fallback default values if opened empty
     const formName = document.getElementById('pre-auth-form-name');
     if (formName && !formName.value) {
       document.getElementById('pre-auth-form-name').value = 'Rajiv Verma';
@@ -256,9 +254,45 @@ function togglePreAuthForm(show) {
       document.getElementById('pre-auth-form-procedure').value = 'Laparoscopic Cholecystectomy';
       document.getElementById('pre-auth-form-amount').value = '145000';
     }
-  } else {
-    formCard.style.display = 'none';
   }
+  switchSubmissionMode(mode);
+}
+
+function togglePreAuthForm(show) {
+  if (show) openSubmissionWizard('preauth');
+  else {
+    const formCard = document.getElementById('pre-auth-form-card');
+    if (formCard) formCard.style.display = 'none';
+  }
+}
+
+function switchSubmissionMode(mode) {
+  const isClaim = mode === 'claim';
+  const radioPreauth = document.getElementById('sub-type-preauth');
+  const radioClaim = document.getElementById('sub-type-claim');
+  if (radioPreauth && !isClaim) radioPreauth.checked = true;
+  if (radioClaim && isClaim) radioClaim.checked = true;
+
+  const titleEl = document.getElementById('submission-wizard-title');
+  const procLabel = document.getElementById('label-form-procedure');
+  const amtLabel = document.getElementById('label-form-amount');
+  const extraFields = document.getElementById('claim-extra-fields');
+  const submitBtn = document.getElementById('wizard-submit-btn');
+
+  if (isClaim) {
+    if (titleEl) titleEl.innerHTML = '<i data-lucide="file-plus" class="icon-sm"></i> Submit New Final Claim / Settlement';
+    if (procLabel) procLabel.textContent = 'Procedure / Treatment Summary';
+    if (amtLabel) amtLabel.textContent = 'Final Claim Amount (₹)';
+    if (extraFields) extraFields.style.display = 'block';
+    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="check-circle" class="icon-sm"></i> Submit Final Claim for Settlement';
+  } else {
+    if (titleEl) titleEl.innerHTML = '<i data-lucide="shield-check" class="icon-sm"></i> Submit Cashless Pre-Authorization';
+    if (procLabel) procLabel.textContent = 'Proposed Procedure';
+    if (amtLabel) amtLabel.textContent = 'Estimated Bill Amount (₹)';
+    if (extraFields) extraFields.style.display = 'none';
+    if (submitBtn) submitBtn.innerHTML = '<i data-lucide="send" class="icon-sm"></i> Submit Pre-Authorization to TPA';
+  }
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 function toggleIcuStatus(checked) {
@@ -274,7 +308,8 @@ function toggleIcuStatus(checked) {
   }
 }
 
-function submitPreAuthForm() {
+function submitSubmissionWizard() {
+  const isClaim = document.getElementById('sub-type-claim') && document.getElementById('sub-type-claim').checked;
   const name = document.getElementById('pre-auth-form-name').value.trim();
   const id = document.getElementById('pre-auth-form-id').value.trim();
   const insurer = document.getElementById('pre-auth-form-insurer').value;
@@ -285,37 +320,101 @@ function submitPreAuthForm() {
   const isIcu = document.getElementById('pre-auth-form-icu').checked;
 
   if (!name || !id || !policy || !procedure || !amount) {
-    showToastHP('Please fill out all fields in the pre-authorization form', 'warning');
+    showToastHP('Please fill out all required fields', 'warning');
     return;
   }
 
-  const requestId = 'PA-2026-' + Math.floor(1000 + Math.random() * 9000);
-  const statusTag = isIcu 
-    ? '<span class="antd-tag antd-tag-warning">ICU Emergency</span>' 
-    : '<span class="antd-tag antd-tag-info">AI Reviewing</span>';
-
   const formattedAmount = '₹' + parseInt(amount).toLocaleString('en-IN');
 
-  const tbody = document.getElementById('active-pre-auth-tbody');
-  if (tbody) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><span class="antd-text-strong">${requestId}</span></td>
-      <td>${name}<br><span class="antd-text-tertiary">ID: ${id}</span></td>
-      <td>${procedure}<br><span class="antd-text-tertiary">Diag: ${diagnosis}</span></td>
-      <td>${insurer}</td>
-      <td style="font-weight:700;">${formattedAmount}</td>
-      <td>${statusTag}</td>
-      <td>Today</td>
-      <td><button class="antd-btn">View</button></td>
-    `;
-    tbody.insertBefore(tr, tbody.firstChild);
-  }
+  if (isClaim) {
+    const claimId = 'CLM-2026-' + Math.floor(1000 + Math.random() * 9000);
+    const invoiceNo = (document.getElementById('claim-form-invoice') && document.getElementById('claim-form-invoice').value.trim()) || 'INV-2026-NEW';
+    
+    // Add row to Claims Tracker Active Claims Table
+    const claimsTbody = document.querySelector('#claims-content-active tbody');
+    if (claimsTbody) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="antd-text-strong">${id}</span></td>
+        <td>${name}</td>
+        <td>${insurer}</td>
+        <td><span class="antd-tag" style="background: #dcfce7; color: #15803d; font-weight: 600;">New Final Claim</span></td>
+        <td>${formattedAmount}</td>
+        <td><span class="antd-tag antd-tag-success">Submitted (${claimId})</span></td>
+        <td>Just now</td>
+        <td><button class="antd-btn">View Docs</button></td>
+      `;
+      claimsTbody.insertBefore(tr, claimsTbody.firstChild);
+    }
 
-  const preAuthBadge = document.querySelector('#nav-pre-auth span');
-  if (preAuthBadge) {
-    const currentVal = parseInt(preAuthBadge.textContent);
-    preAuthBadge.textContent = currentVal + 1;
+    // Also show in Pre-Auth table as Final Claim
+    const paTbody = document.getElementById('active-pre-auth-tbody');
+    if (paTbody) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="antd-text-strong">${claimId}</span></td>
+        <td>${name}<br><span class="antd-text-tertiary">ID: ${id}</span></td>
+        <td>${procedure}<br><span class="antd-text-tertiary">Inv: ${invoiceNo}</span></td>
+        <td>${insurer}</td>
+        <td style="font-weight:700;">${formattedAmount}</td>
+        <td><span class="antd-tag antd-tag-success">Final Claim</span></td>
+        <td>Today</td>
+        <td><button class="antd-btn">View</button></td>
+      `;
+      paTbody.insertBefore(tr, paTbody.firstChild);
+    }
+
+    showToastHP(`New hospital claim ${claimId} submitted successfully to ${insurer} for settlement!`, 'success');
+  } else {
+    const requestId = 'PA-2026-' + Math.floor(1000 + Math.random() * 9000);
+    const statusTag = isIcu 
+      ? '<span class="antd-tag antd-tag-warning">ICU Emergency</span>' 
+      : '<span class="antd-tag antd-tag-info">AI Reviewing</span>';
+
+    const paTbody = document.getElementById('active-pre-auth-tbody');
+    if (paTbody) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="antd-text-strong">${requestId}</span></td>
+        <td>${name}<br><span class="antd-text-tertiary">ID: ${id}</span></td>
+        <td>${procedure}<br><span class="antd-text-tertiary">Diag: ${diagnosis}</span></td>
+        <td>${insurer}</td>
+        <td style="font-weight:700;">${formattedAmount}</td>
+        <td>${statusTag}</td>
+        <td>Today</td>
+        <td><button class="antd-btn">View</button></td>
+      `;
+      paTbody.insertBefore(tr, paTbody.firstChild);
+    }
+
+    // Also mirror to Claims Tracker table
+    const claimsTbody = document.querySelector('#claims-content-active tbody');
+    if (claimsTbody) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="antd-text-strong">${id}</span></td>
+        <td>${name}</td>
+        <td>${insurer}</td>
+        <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+        <td>${formattedAmount}</td>
+        <td>${statusTag}</td>
+        <td>Just now</td>
+        <td><button class="antd-btn">View Docs</button></td>
+      `;
+      claimsTbody.insertBefore(tr, claimsTbody.firstChild);
+    }
+
+    const preAuthBadge = document.querySelector('#nav-pre-auth span');
+    if (preAuthBadge) {
+      const currentVal = parseInt(preAuthBadge.textContent);
+      preAuthBadge.textContent = currentVal + 1;
+    }
+
+    if (isIcu) {
+      showToastHP(`Emergency Pre-Auth ${requestId} submitted without patient OTP`, 'success');
+    } else {
+      showToastHP(`Pre-authorization request ${requestId} submitted successfully to ${insurer}`, 'success');
+    }
   }
 
   // Clear form
@@ -327,13 +426,10 @@ function submitPreAuthForm() {
   document.getElementById('pre-auth-form-icu').checked = false;
   toggleIcuStatus(false);
   togglePreAuthForm(false);
-
-  if (isIcu) {
-    showToastHP(`Emergency Pre-Auth ${requestId} submitted without patient OTP`, 'success');
-  } else {
-    showToastHP(`Pre-authorization request ${requestId} submitted successfully to ${insurer}`, 'success');
-  }
 }
+
+// Legacy compat wrapper
+function submitPreAuthForm() { submitSubmissionWizard(); }
 
 // ── Login page logic ──────────────────────────────────────────────────────
 function doStaffLogin() {
