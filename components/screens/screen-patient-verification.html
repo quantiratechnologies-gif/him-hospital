@@ -12,8 +12,8 @@
     <div class="antd-card">
       <h3 class="antd-card-title antd-mb-4">Search Patient</h3>
       <div class="antd-flex antd-gap-2 antd-mb-4">
-        <input type="text" class="antd-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
-        <button class="antd-btn antd-btn-primary"><i data-lucide="search" class="icon-sm"></i> Verify</button>
+        <input type="text" class="antd-input" id="patient-search-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
+        <button class="antd-btn antd-btn-primary" onclick="verifyPatient()"><i data-lucide="search" class="icon-sm"></i> Verify</button>
       </div>
       <div class="antd-alert"
         style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;color:#166534;font-size:13px;">
@@ -25,7 +25,7 @@
       <h3 class="antd-card-title antd-mb-4">Quick Eligibility Check</h3>
       <div class="antd-form-group">
         <label class="antd-label">Insurance Company</label>
-        <select class="antd-input">
+        <select class="antd-input" id="quick-eligibility-insurer">
           <option>Select Insurer</option>
           <option>Star Health</option>
           <option>HDFC ERGO</option>
@@ -35,11 +35,47 @@
       </div>
       <div class="antd-form-group">
         <label class="antd-label">Policy Number</label>
-        <input type="text" class="antd-input" placeholder="e.g. MED-2394-A">
+        <input type="text" class="antd-input" id="quick-eligibility-policy" placeholder="e.g. MED-2394-A">
       </div>
       <button class="antd-btn antd-btn-primary" style="width:100%;"
-        onclick="showToastHP('Eligibility check initiated','success')">
+        onclick="verifyPatientQuick()">
         <i data-lucide="shield-check" class="icon-sm"></i> Check Eligibility
+      </button>
+    </div>
+  </div>
+
+  <!-- Verification Result Card (Hidden by default) -->
+  <div class="antd-card antd-mb-6" id="patient-verify-result" style="display:none; border:1px solid #bbf7d0; background:#f0fdf4; border-radius:8px; padding:20px; transition: all 0.3s ease;">
+    <div class="antd-flex antd-justify-between antd-items-center antd-mb-4">
+      <div class="antd-flex antd-items-center antd-gap-2">
+        <i data-lucide="check-circle-2" class="icon-sm" style="color:#16a34a;"></i>
+        <h3 class="antd-card-title" style="margin:0; color:#166534;">Insurance Eligibility Verified</h3>
+      </div>
+      <span class="antd-tag antd-tag-success" style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; font-weight:600;">ACTIVE POLICY</span>
+    </div>
+    <div class="antd-grid-3 antd-mb-4" style="gap:20px; background:rgba(255,255,255,0.6); padding:16px; border-radius:8px; border:1px solid rgba(16,163,74,0.1);">
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Patient Name</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-name">-</div>
+        <div style="font-size:12px;color:#166534;" id="verify-res-meta">-</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Insurer & Policy</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-insurer">-</div>
+        <div style="font-size:12px;color:#166534;" id="verify-res-policy">-</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Pre-Auth Limit</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-limit">₹2,50,000</div>
+        <div style="font-size:12px;color:#166534;">Co-pay: 10% applicable</div>
+      </div>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" style="background:#16a34a; border-color:#16a34a; font-weight:600;" onclick="initiatePreAuthFromVerification()">
+        <i data-lucide="shield" class="icon-sm"></i> Initiate Pre-Authorization
+      </button>
+      <button class="antd-btn" style="color:#15803d; border-color:#bbf7d0; background:transparent;" onclick="hideVerificationResult()">
+        Clear Results
       </button>
     </div>
   </div>

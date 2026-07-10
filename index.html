@@ -115,18 +115,8 @@
   <div class="hp-login-right">
     <div style="max-width:360px;width:100%;margin:0 auto;">
       <div style="margin-bottom:28px;">
-        <h2 style="font-size:24px;font-weight:800;color:#1e293b;margin:0 0 6px;">Hospital Staff Login</h2>
-        <p style="font-size:14px;color:#64748b;margin:0;">Sign in to access the claims workstation</p>
-      </div>
-
-      <!-- Tabs -->
-      <div style="display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:24px;">
-        <div id="login-tab-staff"
-          style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid #2563eb;color:#2563eb;transition:all 0.15s;"
-          onclick="selectLoginMode('staff')">Staff Login</div>
-        <div id="login-tab-onboard"
-          style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:#64748b;transition:all 0.15s;"
-          onclick="selectLoginMode('onboard')">New Hospital</div>
+        <h2 style="font-size:24px;font-weight:800;color:#1e293b;margin:0 0 6px;">Healthcare Provider Login</h2>
+        <p style="font-size:14px;color:#64748b;margin:0;">Sign in to manage TPA claims and patient data</p>
       </div>
 
       <!-- Staff Login Form -->
@@ -144,7 +134,7 @@
         </div>
         <button class="hp-btn hp-btn-primary" id="login-submit-btn"
           style="width:100%;height:44px;font-size:14px;border-radius:8px;margin-bottom:20px;" onclick="doStaffLogin()">
-          Sign In to Hospital Desk
+          Sign In to Claims Portal
         </button>
         <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px;">
           <p style="font-size:12px;color:#64748b;margin:0;">Demo: any email + any password</p>
@@ -152,32 +142,6 @@
             onclick="document.getElementById('login-email').value='dr.sharma@apollo.com';document.getElementById('login-password').value='demo1234';">Fill
             Demo Credentials</button>
         </div>
-      </div>
-
-      <!-- Onboard Form -->
-      <div id="login-form-onboard" style="display:none;">
-        <div class="hp-form-group">
-          <label class="hp-label">Hospital Name</label>
-          <input class="hp-input" placeholder="e.g. City Hospital, Banjara Hills" />
-        </div>
-        <div class="hp-form-group">
-          <label class="hp-label">ROHINI / Hospital ID</label>
-          <input class="hp-input" placeholder="e.g. HOSP-XXX-001" />
-        </div>
-        <div class="hp-form-group">
-          <label class="hp-label">Contact Person Email</label>
-          <input class="hp-input" type="email" placeholder="billing@hospital.com" />
-        </div>
-        <div class="hp-form-group">
-          <label class="hp-label">Mobile Number</label>
-          <input class="hp-input" placeholder="+91 98765 43210" />
-        </div>
-        <button class="hp-btn hp-btn-primary" style="width:100%;height:44px;font-size:14px;border-radius:8px;"
-          onclick="doOnboardRequest()">
-          Request Onboarding
-        </button>
-        <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;">Our team will verify and activate
-          your account within 24-48 hours</p>
       </div>
 
       <div style="margin-top:24px;text-align:center;padding-top:20px;border-top:1px solid #e2e8f0;">
@@ -234,11 +198,6 @@
       style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
       id="sb-hosp-name">Medanta - The Medicity, Gurugram</div>
     <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;">HOSP-MED-001 · TPA Desk</div>
-    <div
-      style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:20px;font-size:9px;font-weight:600;color:#34d399;margin-top:6px;">
-      <span style="width:5px;height:5px;background:#34d399;border-radius:50%;"></span>
-      AI Engine Active
-    </div>
   </div>
   <!-- Navigation -->
   <div style="flex:1;overflow-y:auto;padding-top:12px;">
@@ -257,17 +216,12 @@
         style="margin-left:auto;background:#ef4444;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">4</span></a>
     <p
       style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
-      AI Claim Tools</p>
+      Claims & Uploads</p>
     <a class="app-nav-link" id="nav-pre-auth" onclick="showScreen('pre-auth')"><i data-lucide="shield"
         class="icon-sm"></i> Pre-Authorization <span
         style="margin-left:auto;background:#f59e0b;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">12</span></a>
     <a class="app-nav-link" id="nav-document-upload" onclick="showScreen('document-upload')"><i data-lucide="upload"
         class="icon-sm"></i> Document Upload</a>
-    <a class="app-nav-link" id="nav-ai-optimizer" onclick="showScreen('ai-optimizer')"><i data-lucide="zap"
-        class="icon-sm"></i> AI Description Fix</a>
-    <p
-      style="color:rgba(255,255,255,0.45);font-size:11px;margin:20px 24px 6px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">
-      Claims</p>
     <a class="app-nav-link" id="nav-active-claims" onclick="showScreen('active-claims')"><i data-lucide="activity"
         class="icon-sm"></i> Active Claims</a>
     <a class="app-nav-link" id="nav-claim-history" onclick="showScreen('claim-history')"><i data-lucide="clock"
@@ -432,8 +386,8 @@
     <div class="antd-card">
       <h3 class="antd-card-title antd-mb-4">Search Patient</h3>
       <div class="antd-flex antd-gap-2 antd-mb-4">
-        <input type="text" class="antd-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
-        <button class="antd-btn antd-btn-primary"><i data-lucide="search" class="icon-sm"></i> Verify</button>
+        <input type="text" class="antd-input" id="patient-search-input" placeholder="Enter Patient ID or Mobile Number" style="flex:1;">
+        <button class="antd-btn antd-btn-primary" onclick="verifyPatient()"><i data-lucide="search" class="icon-sm"></i> Verify</button>
       </div>
       <div class="antd-alert"
         style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;color:#166534;font-size:13px;">
@@ -445,7 +399,7 @@
       <h3 class="antd-card-title antd-mb-4">Quick Eligibility Check</h3>
       <div class="antd-form-group">
         <label class="antd-label">Insurance Company</label>
-        <select class="antd-input">
+        <select class="antd-input" id="quick-eligibility-insurer">
           <option>Select Insurer</option>
           <option>Star Health</option>
           <option>HDFC ERGO</option>
@@ -455,11 +409,47 @@
       </div>
       <div class="antd-form-group">
         <label class="antd-label">Policy Number</label>
-        <input type="text" class="antd-input" placeholder="e.g. MED-2394-A">
+        <input type="text" class="antd-input" id="quick-eligibility-policy" placeholder="e.g. MED-2394-A">
       </div>
       <button class="antd-btn antd-btn-primary" style="width:100%;"
-        onclick="showToastHP('Eligibility check initiated','success')">
+        onclick="verifyPatientQuick()">
         <i data-lucide="shield-check" class="icon-sm"></i> Check Eligibility
+      </button>
+    </div>
+  </div>
+
+  <!-- Verification Result Card (Hidden by default) -->
+  <div class="antd-card antd-mb-6" id="patient-verify-result" style="display:none; border:1px solid #bbf7d0; background:#f0fdf4; border-radius:8px; padding:20px; transition: all 0.3s ease;">
+    <div class="antd-flex antd-justify-between antd-items-center antd-mb-4">
+      <div class="antd-flex antd-items-center antd-gap-2">
+        <i data-lucide="check-circle-2" class="icon-sm" style="color:#16a34a;"></i>
+        <h3 class="antd-card-title" style="margin:0; color:#166534;">Insurance Eligibility Verified</h3>
+      </div>
+      <span class="antd-tag antd-tag-success" style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; font-weight:600;">ACTIVE POLICY</span>
+    </div>
+    <div class="antd-grid-3 antd-mb-4" style="gap:20px; background:rgba(255,255,255,0.6); padding:16px; border-radius:8px; border:1px solid rgba(16,163,74,0.1);">
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Patient Name</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-name">-</div>
+        <div style="font-size:12px;color:#166534;" id="verify-res-meta">-</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Insurer & Policy</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-insurer">-</div>
+        <div style="font-size:12px;color:#166534;" id="verify-res-policy">-</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#15803d;text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-bottom:4px;">Pre-Auth Limit</div>
+        <div style="font-size:16px;font-weight:700;color:#14532d;" id="verify-res-limit">₹2,50,000</div>
+        <div style="font-size:12px;color:#166534;">Co-pay: 10% applicable</div>
+      </div>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" style="background:#16a34a; border-color:#16a34a; font-weight:600;" onclick="initiatePreAuthFromVerification()">
+        <i data-lucide="shield" class="icon-sm"></i> Initiate Pre-Authorization
+      </button>
+      <button class="antd-btn" style="color:#15803d; border-color:#bbf7d0; background:transparent;" onclick="hideVerificationResult()">
+        Clear Results
       </button>
     </div>
   </div>
@@ -628,9 +618,84 @@
       <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization</h2>
       <p class="antd-text-secondary" style="margin:2px 0 0;">Submit and track pre-authorization requests</p>
     </div>
-    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New pre-auth form opened','info')">
+    <button class="antd-btn antd-btn-primary" onclick="togglePreAuthForm(true)">
       <i data-lucide="plus" class="icon-sm"></i> New Pre-Auth
     </button>
+  </div>
+
+  <!-- Pre-Auth Form Card (Hidden by default) -->
+  <div class="antd-card antd-mb-6" id="pre-auth-form-card" style="display:none; border:1px solid #bfdbfe; background:#f0f7ff; border-radius:8px; padding:20px;">
+    <div class="antd-flex antd-items-center antd-justify-between antd-mb-4" style="border-bottom:1px solid #bfdbfe; padding-bottom:12px;">
+      <h3 class="antd-card-title" style="margin:0; color:#1e40af;"><i data-lucide="file-plus" class="icon-sm"></i> Submit New Pre-Authorization</h3>
+      <button class="antd-btn antd-btn-sm" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)"><i data-lucide="x" class="icon-sm"></i> Close</button>
+    </div>
+    
+    <!-- ICU / Incapacitated Patient Bypass Option -->
+    <div class="antd-alert antd-mb-4" style="background:#fffbeb; border:1px solid #fef3c7; color:#92400e; padding:12px; border-radius:6px; margin-bottom: 16px;">
+      <div class="antd-flex antd-items-start antd-gap-2">
+        <input type="checkbox" id="pre-auth-form-icu" style="margin-top:3px; width:16px; height:16px; cursor:pointer;" onchange="toggleIcuStatus(this.checked)">
+        <div>
+          <label for="pre-auth-form-icu" style="font-weight:700; cursor:pointer; font-size:13px; display:block;">Patient is in ICU / Unconscious / Incapacitated</label>
+          <span style="font-size:12px; color:#b45309;" id="icu-helper-text">Standard Patient Portal confirmation is not possible. Submit directly on behalf of patient.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="antd-grid-2 antd-mb-4" style="gap:16px; margin-bottom:16px;">
+      <div>
+        <div class="antd-form-group">
+          <label class="antd-label">Patient Name</label>
+          <input type="text" class="antd-input" id="pre-auth-form-name" placeholder="Enter Patient Name" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+        <div class="antd-form-group" style="margin-top:12px;">
+          <label class="antd-label">Patient ID / MR Number</label>
+          <input type="text" class="antd-input" id="pre-auth-form-id" placeholder="Enter ID (e.g. 99421-A)" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+      </div>
+      <div>
+        <div class="antd-form-group">
+          <label class="antd-label">Insurer</label>
+          <select class="antd-input" id="pre-auth-form-insurer" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+            <option value="Star Health">Star Health</option>
+            <option value="HDFC ERGO">HDFC ERGO</option>
+            <option value="ICICI Lombard">ICICI Lombard</option>
+            <option value="Niva Bupa">Niva Bupa</option>
+          </select>
+        </div>
+        <div class="antd-form-group" style="margin-top:12px;">
+          <label class="antd-label">Policy Number</label>
+          <input type="text" class="antd-input" id="pre-auth-form-policy" placeholder="Enter Policy (e.g. MED-2394-A)" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+      </div>
+    </div>
+
+    <div class="antd-grid-3 antd-mb-4" style="gap:16px; margin-bottom:20px;">
+      <div class="antd-form-group">
+        <label class="antd-label">Diagnosis / ICD-10 Category</label>
+        <select class="antd-input" id="pre-auth-form-diagnosis" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+          <option value="Cholelithiasis">Cholelithiasis (Gallstones)</option>
+          <option value="Osteoarthritis">Osteoarthritis (Knee)</option>
+          <option value="Inguinal Hernia">Inguinal Hernia</option>
+          <option value="Acute Appendicitis">Acute Appendicitis</option>
+          <option value="Coronary Artery Disease">Coronary Artery Disease</option>
+        </select>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Proposed Procedure</label>
+        <input type="text" class="antd-input" id="pre-auth-form-procedure" placeholder="e.g. Laparoscopic Cholecystectomy" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Estimated Bill Amount (₹)</label>
+        <input type="number" class="antd-input" id="pre-auth-form-amount" placeholder="e.g. 145000" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+      </div>
+    </div>
+
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" style="background:#2563eb; border-color:#2563eb;" onclick="submitPreAuthForm()">
+        <i data-lucide="send" class="icon-sm"></i> Submit Pre-Authorization to TPA
+      </button>
+      <button class="antd-btn" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)">Cancel</button>
+    </div>
   </div>
 
   <div class="antd-card antd-p-0">
@@ -661,7 +726,7 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="active-pre-auth-tbody">
           <tr>
             <td><span class="antd-text-strong">PA-2026-0142</span></td>
             <td>Rajiv Verma</td>

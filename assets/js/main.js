@@ -114,34 +114,232 @@ function showToastHP(message, type = 'info') {
 // Legacy compat (used by older screens)
 function showToast(msg, type) { showToastHP(msg, type); }
 
-// ── Login page logic ──────────────────────────────────────────────────────
-let loginMode = 'staff'; // 'staff' or 'onboard'
+// ── Patient Verification & Pre-Auth Logic ─────────────────────────────────
 
-function selectLoginMode(mode) {
-  loginMode = mode;
-  const staffTab = document.getElementById('login-tab-staff');
-  const onboardTab = document.getElementById('login-tab-onboard');
-  const staffForm = document.getElementById('login-form-staff');
-  const onboardForm = document.getElementById('login-form-onboard');
-  if (!staffTab) return;
+const MOCK_PATIENTS = {
+  '99421-A': {
+    id: '99421-A',
+    name: 'Rajiv Verma',
+    insurer: 'Star Health',
+    policy: 'MED-2394-A',
+    meta: 'Age 52 · Male · Active since 2021',
+    limit: '₹2,50,000'
+  },
+  '9876543210': {
+    id: '99421-A',
+    name: 'Rajiv Verma',
+    insurer: 'Star Health',
+    policy: 'MED-2394-A',
+    meta: 'Age 52 · Male · Active since 2021',
+    limit: '₹2,50,000'
+  },
+  '88210-B': {
+    id: '88210-B',
+    name: 'Sneha Patil',
+    insurer: 'HDFC ERGO',
+    policy: 'HDFC-2947-1234',
+    meta: 'Age 34 · Female · Active since 2019',
+    limit: '₹3,50,000'
+  }
+};
 
-  if (mode === 'staff') {
-    staffTab.style.borderBottomColor = 'var(--hp-primary)';
-    staffTab.style.color = 'var(--hp-primary)';
-    onboardTab.style.borderBottomColor = 'transparent';
-    onboardTab.style.color = '#64748b';
-    staffForm.style.display = 'block';
-    onboardForm.style.display = 'none';
+let currentVerifiedPatient = null;
+
+function verifyPatient() {
+  const searchInput = document.getElementById('patient-search-input');
+  if (!searchInput) return;
+  const val = searchInput.value.trim();
+  if (!val) {
+    showToastHP('Please enter a Patient ID or Mobile Number', 'warning');
+    return;
+  }
+
+  const patient = MOCK_PATIENTS[val];
+  const resultCard = document.getElementById('patient-verify-result');
+
+  if (patient) {
+    currentVerifiedPatient = patient;
+    document.getElementById('verify-res-name').textContent = patient.name;
+    document.getElementById('verify-res-meta').textContent = patient.meta;
+    document.getElementById('verify-res-insurer').textContent = patient.insurer + ' · ' + patient.policy;
+    document.getElementById('verify-res-policy').textContent = 'Policy Verified Online';
+    document.getElementById('verify-res-limit').textContent = patient.limit;
+
+    if (resultCard) {
+      resultCard.style.display = 'block';
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    showToastHP('Patient found & policy verified successfully!', 'success');
   } else {
-    onboardTab.style.borderBottomColor = 'var(--hp-primary)';
-    onboardTab.style.color = 'var(--hp-primary)';
-    staffTab.style.borderBottomColor = 'transparent';
-    staffTab.style.color = '#64748b';
-    staffForm.style.display = 'none';
-    onboardForm.style.display = 'block';
+    showToastHP('No active policy found. Check details or try again.', 'error');
+    if (resultCard) resultCard.style.display = 'none';
+    currentVerifiedPatient = null;
   }
 }
 
+function verifyPatientQuick() {
+  const insurer = document.getElementById('quick-eligibility-insurer').value;
+  const policy = document.getElementById('quick-eligibility-policy').value.trim();
+
+  if (insurer === 'Select Insurer' || !policy) {
+    showToastHP('Please select insurer and enter policy number', 'warning');
+    return;
+  }
+
+  currentVerifiedPatient = {
+    id: 'TR-' + Math.floor(1000 + Math.random() * 9000),
+    name: 'Patient (Quick Check)',
+    insurer: insurer,
+    policy: policy,
+    meta: 'Eligibility checked on the fly',
+    limit: '₹1,80,000'
+  };
+
+  document.getElementById('verify-res-name').textContent = currentVerifiedPatient.name;
+  document.getElementById('verify-res-meta').textContent = currentVerifiedPatient.meta;
+  document.getElementById('verify-res-insurer').textContent = currentVerifiedPatient.insurer + ' · ' + currentVerifiedPatient.policy;
+  document.getElementById('verify-res-policy').textContent = 'Real-time TPA check complete';
+  document.getElementById('verify-res-limit').textContent = currentVerifiedPatient.limit;
+
+  const resultCard = document.getElementById('patient-verify-result');
+  if (resultCard) {
+    resultCard.style.display = 'block';
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  showToastHP('Quick eligibility check passed!', 'success');
+}
+
+function hideVerificationResult() {
+  const resultCard = document.getElementById('patient-verify-result');
+  if (resultCard) resultCard.style.display = 'none';
+  currentVerifiedPatient = null;
+}
+
+function initiatePreAuthFromVerification() {
+  if (!currentVerifiedPatient) {
+    showToastHP('No active patient verified', 'warning');
+    return;
+  }
+
+  const formName = document.getElementById('pre-auth-form-name');
+  const formId = document.getElementById('pre-auth-form-id');
+  const formInsurer = document.getElementById('pre-auth-form-insurer');
+  const formPolicy = document.getElementById('pre-auth-form-policy');
+
+  if (formName) formName.value = currentVerifiedPatient.name;
+  if (formId) formId.value = currentVerifiedPatient.id;
+  if (formInsurer) formInsurer.value = currentVerifiedPatient.insurer.split(' · ')[0];
+  if (formPolicy) formPolicy.value = currentVerifiedPatient.policy;
+
+  const icuCheck = document.getElementById('pre-auth-form-icu');
+  if (icuCheck) {
+    icuCheck.checked = false;
+    toggleIcuStatus(false);
+  }
+
+  showScreen('pre-auth');
+  togglePreAuthForm(true);
+  showToastHP('Pre-authorization form pre-filled with patient details', 'info');
+}
+
+function togglePreAuthForm(show) {
+  const formCard = document.getElementById('pre-auth-form-card');
+  if (!formCard) return;
+
+  if (show) {
+    formCard.style.display = 'block';
+    formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Fallback default values if opened empty
+    const formName = document.getElementById('pre-auth-form-name');
+    if (formName && !formName.value) {
+      document.getElementById('pre-auth-form-name').value = 'Rajiv Verma';
+      document.getElementById('pre-auth-form-id').value = '99421-A';
+      document.getElementById('pre-auth-form-insurer').value = 'Star Health';
+      document.getElementById('pre-auth-form-policy').value = 'MED-2394-A';
+      document.getElementById('pre-auth-form-procedure').value = 'Laparoscopic Cholecystectomy';
+      document.getElementById('pre-auth-form-amount').value = '145000';
+    }
+  } else {
+    formCard.style.display = 'none';
+  }
+}
+
+function toggleIcuStatus(checked) {
+  const helper = document.getElementById('icu-helper-text');
+  if (helper) {
+    if (checked) {
+      helper.innerHTML = '<strong>🚨 ICU Emergency Mode:</strong> OTP verification bypassed. Hospital desk authorized this submission directly due to patient emergency.';
+      helper.style.color = '#ef4444';
+    } else {
+      helper.textContent = 'Standard Patient Portal confirmation is not possible. Submit directly on behalf of patient.';
+      helper.style.color = '#b45309';
+    }
+  }
+}
+
+function submitPreAuthForm() {
+  const name = document.getElementById('pre-auth-form-name').value.trim();
+  const id = document.getElementById('pre-auth-form-id').value.trim();
+  const insurer = document.getElementById('pre-auth-form-insurer').value;
+  const policy = document.getElementById('pre-auth-form-policy').value.trim();
+  const diagnosis = document.getElementById('pre-auth-form-diagnosis').value;
+  const procedure = document.getElementById('pre-auth-form-procedure').value.trim();
+  const amount = document.getElementById('pre-auth-form-amount').value.trim();
+  const isIcu = document.getElementById('pre-auth-form-icu').checked;
+
+  if (!name || !id || !policy || !procedure || !amount) {
+    showToastHP('Please fill out all fields in the pre-authorization form', 'warning');
+    return;
+  }
+
+  const requestId = 'PA-2026-' + Math.floor(1000 + Math.random() * 9000);
+  const statusTag = isIcu 
+    ? '<span class="antd-tag antd-tag-warning">ICU Emergency</span>' 
+    : '<span class="antd-tag antd-tag-info">AI Reviewing</span>';
+
+  const formattedAmount = '₹' + parseInt(amount).toLocaleString('en-IN');
+
+  const tbody = document.getElementById('active-pre-auth-tbody');
+  if (tbody) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="antd-text-strong">${requestId}</span></td>
+      <td>${name}<br><span class="antd-text-tertiary">ID: ${id}</span></td>
+      <td>${procedure}<br><span class="antd-text-tertiary">Diag: ${diagnosis}</span></td>
+      <td>${insurer}</td>
+      <td style="font-weight:700;">${formattedAmount}</td>
+      <td>${statusTag}</td>
+      <td>Today</td>
+      <td><button class="antd-btn">View</button></td>
+    `;
+    tbody.insertBefore(tr, tbody.firstChild);
+  }
+
+  const preAuthBadge = document.querySelector('#nav-pre-auth span');
+  if (preAuthBadge) {
+    const currentVal = parseInt(preAuthBadge.textContent);
+    preAuthBadge.textContent = currentVal + 1;
+  }
+
+  // Clear form
+  document.getElementById('pre-auth-form-name').value = '';
+  document.getElementById('pre-auth-form-id').value = '';
+  document.getElementById('pre-auth-form-policy').value = '';
+  document.getElementById('pre-auth-form-procedure').value = '';
+  document.getElementById('pre-auth-form-amount').value = '';
+  document.getElementById('pre-auth-form-icu').checked = false;
+  toggleIcuStatus(false);
+  togglePreAuthForm(false);
+
+  if (isIcu) {
+    showToastHP(`Emergency Pre-Auth ${requestId} submitted without patient OTP`, 'success');
+  } else {
+    showToastHP(`Pre-authorization request ${requestId} submitted successfully to ${insurer}`, 'success');
+  }
+}
+
+// ── Login page logic ──────────────────────────────────────────────────────
 function doStaffLogin() {
   const email = document.getElementById('login-email') ? document.getElementById('login-email').value : '';
   const password = document.getElementById('login-password') ? document.getElementById('login-password').value : '';
@@ -151,16 +349,11 @@ function doStaffLogin() {
     return;
   }
 
-  // Simulate login
   const btn = document.getElementById('login-submit-btn');
   if (btn) { btn.textContent = 'Verifying...'; btn.disabled = true; }
 
   setTimeout(() => {
-    hpLogin('Dr. Sharma', 'Apollo Hospitals, Jubilee Hills');
+    hpLogin('Dr. Sharma', 'Medanta - The Medicity, Gurugram');
     if (btn) { btn.textContent = 'Sign In'; btn.disabled = false; }
   }, 1200);
-}
-
-function doOnboardRequest() {
-  showToastHP('Onboarding request submitted! Our team will contact you within 24 hours.', 'success');
 }

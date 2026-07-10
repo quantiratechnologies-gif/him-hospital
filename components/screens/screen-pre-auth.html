@@ -4,9 +4,84 @@
       <h2 class="antd-text-large" style="margin:0;"><i data-lucide="shield" class="icon-sm"></i> Pre-Authorization</h2>
       <p class="antd-text-secondary" style="margin:2px 0 0;">Submit and track pre-authorization requests</p>
     </div>
-    <button class="antd-btn antd-btn-primary" onclick="showToastHP('New pre-auth form opened','info')">
+    <button class="antd-btn antd-btn-primary" onclick="togglePreAuthForm(true)">
       <i data-lucide="plus" class="icon-sm"></i> New Pre-Auth
     </button>
+  </div>
+
+  <!-- Pre-Auth Form Card (Hidden by default) -->
+  <div class="antd-card antd-mb-6" id="pre-auth-form-card" style="display:none; border:1px solid #bfdbfe; background:#f0f7ff; border-radius:8px; padding:20px;">
+    <div class="antd-flex antd-items-center antd-justify-between antd-mb-4" style="border-bottom:1px solid #bfdbfe; padding-bottom:12px;">
+      <h3 class="antd-card-title" style="margin:0; color:#1e40af;"><i data-lucide="file-plus" class="icon-sm"></i> Submit New Pre-Authorization</h3>
+      <button class="antd-btn antd-btn-sm" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)"><i data-lucide="x" class="icon-sm"></i> Close</button>
+    </div>
+    
+    <!-- ICU / Incapacitated Patient Bypass Option -->
+    <div class="antd-alert antd-mb-4" style="background:#fffbeb; border:1px solid #fef3c7; color:#92400e; padding:12px; border-radius:6px; margin-bottom: 16px;">
+      <div class="antd-flex antd-items-start antd-gap-2">
+        <input type="checkbox" id="pre-auth-form-icu" style="margin-top:3px; width:16px; height:16px; cursor:pointer;" onchange="toggleIcuStatus(this.checked)">
+        <div>
+          <label for="pre-auth-form-icu" style="font-weight:700; cursor:pointer; font-size:13px; display:block;">Patient is in ICU / Unconscious / Incapacitated</label>
+          <span style="font-size:12px; color:#b45309;" id="icu-helper-text">Standard Patient Portal confirmation is not possible. Submit directly on behalf of patient.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="antd-grid-2 antd-mb-4" style="gap:16px; margin-bottom:16px;">
+      <div>
+        <div class="antd-form-group">
+          <label class="antd-label">Patient Name</label>
+          <input type="text" class="antd-input" id="pre-auth-form-name" placeholder="Enter Patient Name" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+        <div class="antd-form-group" style="margin-top:12px;">
+          <label class="antd-label">Patient ID / MR Number</label>
+          <input type="text" class="antd-input" id="pre-auth-form-id" placeholder="Enter ID (e.g. 99421-A)" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+      </div>
+      <div>
+        <div class="antd-form-group">
+          <label class="antd-label">Insurer</label>
+          <select class="antd-input" id="pre-auth-form-insurer" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+            <option value="Star Health">Star Health</option>
+            <option value="HDFC ERGO">HDFC ERGO</option>
+            <option value="ICICI Lombard">ICICI Lombard</option>
+            <option value="Niva Bupa">Niva Bupa</option>
+          </select>
+        </div>
+        <div class="antd-form-group" style="margin-top:12px;">
+          <label class="antd-label">Policy Number</label>
+          <input type="text" class="antd-input" id="pre-auth-form-policy" placeholder="Enter Policy (e.g. MED-2394-A)" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+        </div>
+      </div>
+    </div>
+
+    <div class="antd-grid-3 antd-mb-4" style="gap:16px; margin-bottom:20px;">
+      <div class="antd-form-group">
+        <label class="antd-label">Diagnosis / ICD-10 Category</label>
+        <select class="antd-input" id="pre-auth-form-diagnosis" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+          <option value="Cholelithiasis">Cholelithiasis (Gallstones)</option>
+          <option value="Osteoarthritis">Osteoarthritis (Knee)</option>
+          <option value="Inguinal Hernia">Inguinal Hernia</option>
+          <option value="Acute Appendicitis">Acute Appendicitis</option>
+          <option value="Coronary Artery Disease">Coronary Artery Disease</option>
+        </select>
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Proposed Procedure</label>
+        <input type="text" class="antd-input" id="pre-auth-form-procedure" placeholder="e.g. Laparoscopic Cholecystectomy" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+      </div>
+      <div class="antd-form-group">
+        <label class="antd-label">Estimated Bill Amount (₹)</label>
+        <input type="number" class="antd-input" id="pre-auth-form-amount" placeholder="e.g. 145000" style="background:#fff; border:1px solid #cbd5e1; width:100%;">
+      </div>
+    </div>
+
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" style="background:#2563eb; border-color:#2563eb;" onclick="submitPreAuthForm()">
+        <i data-lucide="send" class="icon-sm"></i> Submit Pre-Authorization to TPA
+      </button>
+      <button class="antd-btn" style="border-color:#bfdbfe; background:transparent;" onclick="togglePreAuthForm(false)">Cancel</button>
+    </div>
   </div>
 
   <div class="antd-card antd-p-0">
@@ -37,7 +112,7 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="active-pre-auth-tbody">
           <tr>
             <td><span class="antd-text-strong">PA-2026-0142</span></td>
             <td>Rajiv Verma</td>
