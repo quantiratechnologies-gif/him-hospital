@@ -1,0 +1,85 @@
+<div class="screen hp-screen" id="screen-settlements">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="indian-rupee" class="icon-sm"></i> Settlements</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Track payment settlements from insurers</p>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <select class="antd-input" style="width:150px;margin:0;">
+        <option>All Insurers</option>
+        <option>Star Health</option>
+        <option>HDFC ERGO</option>
+        <option>ICICI Lombard</option>
+      </select>
+      <button class="antd-btn"><i data-lucide="download" class="icon-sm"></i> Export</button>
+    </div>
+  </div>
+
+  <div class="antd-grid-4 antd-mb-6">
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#16a34a;">₹4.2L</div>
+      <div class="antd-tag antd-tag-success">Settled This Month</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#f59e0b;">₹1.8L</div>
+      <div class="antd-tag antd-tag-warning">Processing</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#2563eb;">12</div>
+      <div class="antd-tag antd-tag-info">Pending</div>
+    </div>
+    <div class="antd-card" style="text-align:center;">
+      <div style="font-size:28px;font-weight:800;color:#6b7280;">2.5 days</div>
+      <div class="antd-tag">Avg. TAT</div>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0">
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>UTR / Ref No.</th>
+          <th>Patient</th>
+          <th>Insurer</th>
+          <th>Claim ID</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Settled On</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456123</span></td>
+          <td>Priya Sharma</td>
+          <td>Niva Bupa</td>
+          <td>CLM-2026-0042</td>
+          <td style="font-weight:700;">₹42,500</td>
+          <td><span class="antd-tag antd-tag-success">Settled</span></td>
+          <td>10 Jul 2026</td>
+          <td><button class="antd-btn">Download</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456124</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td>CLM-2026-0045</td>
+          <td style="font-weight:700;">₹1,45,000</td>
+          <td><span class="antd-tag antd-tag-warning">Processing</span></td>
+          <td>—</td>
+          <td><button class="antd-btn">Track</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">UTR789456125</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td>CLM-2026-0044</td>
+          <td style="font-weight:700;">₹85,000</td>
+          <td><span class="antd-tag antd-tag-info">Initiated</span></td>
+          <td>—</td>
+          <td><button class="antd-btn">Track</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

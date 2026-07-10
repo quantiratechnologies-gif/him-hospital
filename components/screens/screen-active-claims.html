@@ -1,0 +1,81 @@
+<div class="screen hp-screen" id="screen-active-claims">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <h2 class="antd-text-large" style="margin: 0;"><i data-lucide="activity" class="icon-sm"></i> Active Hospital Claims
+    </h2>
+    <div class="antd-flex antd-gap-2">
+      <input type="text" class="antd-input" placeholder="Search Patient or MR No..." style="width: 250px; margin: 0;">
+      <button class="antd-btn"><i data-lucide="filter" class="icon-sm"></i> Filter</button>
+      <button class="antd-btn antd-btn-primary"><i data-lucide="download" class="icon-sm"></i> Export CSV</button>
+    </div>
+  </div>
+
+  <div class="antd-card antd-p-0" style="overflow-x: auto;">
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient ID (MR)</th>
+          <th>Patient Name</th>
+          <th>Insurance Company</th>
+          <th>Claim Type</th>
+          <th>Amount (₹)</th>
+          <th>Status</th>
+          <th>Last Updated</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">99421-A</span></td>
+          <td>Rajiv Verma</td>
+          <td>Star Health</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹1,45,000</td>
+          <td><span class="antd-tag antd-tag-success">Approved</span></td>
+          <td>10 mins ago</td>
+          <td><button class="antd-btn">View Docs</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">88210-B</span></td>
+          <td>Sneha Patil</td>
+          <td>HDFC ERGO</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
+          <td>₹85,000</td>
+          <td><span class="antd-tag antd-tag-info">AI Reviewing</span></td>
+          <td>1 hr ago</td>
+          <td><button class="antd-btn">View Docs</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">77102-C</span></td>
+          <td>Arun Kumar</td>
+          <td>ICICI Lombard</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹2,10,000</td>
+          <td><span class="antd-tag antd-tag-error">Query Raised</span></td>
+          <td>3 hrs ago</td>
+          <td><button class="antd-btn antd-btn-primary">Reply to Query</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">66005-D</span></td>
+          <td>Priya Sharma</td>
+          <td>Niva Bupa</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Final Settlement</span></td>
+          <td>₹42,500</td>
+          <td><span class="antd-tag antd-tag-success">Settled</span></td>
+          <td>1 day ago</td>
+          <td><button class="antd-btn">View UTR</button></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">55990-E</span></td>
+          <td>Vikram Singh</td>
+          <td>Reliance General</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg);">Cashless Pre-Auth</span></td>
+          <td>₹3,50,000</td>
+          <td><span class="antd-tag" style="background: var(--antd-bg); color: var(--antd-text-secondary);">Draft</span>
+          </td>
+          <td>2 days ago</td>
+          <td><button class="antd-btn">Resume</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="screen hp-screen" id="screen-ai-optimizer">
+  <div class="antd-flex antd-items-center antd-justify-between antd-mb-6">
+    <div>
+      <h2 class="antd-text-large" style="margin:0;"><i data-lucide="zap" class="icon-sm"></i> AI Description Fix</h2>
+      <p class="antd-text-secondary" style="margin:2px 0 0;">Auto-fix procedure descriptions to match insurer policy
+        wording</p>
+    </div>
+  </div>
+
+  <div class="antd-card antd-mb-6">
+    <h3 class="antd-card-title antd-mb-4">Input / Output</h3>
+    <div class="antd-grid-2 antd-mb-4">
+      <div>
+        <label class="antd-label">Hospital Description</label>
+        <textarea class="antd-input" rows="6"
+          placeholder="Paste procedure description from hospital notes...">Laproscopic cholecystectomy with CBD exploration under GA with intraoperative cholangiogram.</textarea>
+      </div>
+      <div>
+        <label class="antd-label">AI Suggested Description</label>
+        <textarea class="antd-input" rows="6" style="background:#f9fafb;"
+          readonly>Laparoscopic cholecystectomy with common bile duct (CBD) exploration under general anesthesia (GA) with intraoperative cholangiogram (IOC).</textarea>
+      </div>
+    </div>
+    <div class="antd-flex antd-gap-2">
+      <button class="antd-btn antd-btn-primary" onclick="showToastHP('Description optimized by AI','success')">
+        <i data-lucide="zap" class="icon-sm"></i> Optimize Description
+      </button>
+      <button class="antd-btn" onclick="showToastHP('Copied to clipboard','info')">
+        <i data-lucide="copy" class="icon-sm"></i> Copy Output
+      </button>
+      <button class="antd-btn" onclick="showToastHP('Saved to patient records','success')">
+        <i data-lucide="save" class="icon-sm"></i> Save to Records
+      </button>
+    </div>
+  </div>
+
+  <div class="antd-card">
+    <h3 class="antd-card-title antd-mb-4">Recent Optimizations</h3>
+    <table class="antd-table">
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Original</th>
+          <th>Optimized</th>
+          <th>Insurer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="antd-text-strong">Rajiv Verma</span></td>
+          <td>Laproscopic cholecystectomy...</td>
+          <td>Laparoscopic cholecystectomy...</td>
+          <td>Star Health</td>
+          <td><span class="antd-tag antd-tag-success">Applied</span></td>
+        </tr>
+        <tr>
+          <td><span class="antd-text-strong">Sneha Patil</span></td>
+          <td>Knee replacement surgery...</td>
+          <td>Total knee arthroplasty...</td>
+          <td>HDFC ERGO</td>
+          <td><span class="antd-tag antd-tag-success">Applied</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
